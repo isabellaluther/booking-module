@@ -44,4 +44,19 @@ describe('TimeSlot', () => {
 
     expect(timeSlot.getDurationInMinutes()).toBe(90)
   })
+
+  // Test that the overlaps method returns true when time slots overlap
+  it('returns true when time slots overlap', () => {
+    const firstTimeSlot = new TimeSlot(
+        new Date('2026-09-20T10:00:00'),
+        new Date('2026-09-20T11:00:00')
+    )
+
+    const secondTimeSlot = new TimeSlot(
+        new Date('2026-09-20T10:30:00'),
+        new Date('2026-09-20T11:30:00')
+    )
+
+    expect(firstTimeSlot.overlaps(secondTimeSlot)).toBe(true)
+  })
 })
