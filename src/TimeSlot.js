@@ -67,4 +67,17 @@ export class TimeSlot {
 
     return durationInMilliseconds / millisecondsPerMinute
   }
+
+  /**
+   * Checks if this time slot overlaps with another time slot.
+   * 
+   * @param {TimeSlot} otherTimeSlot - The other time slot to check for overlap.
+   * @returns {boolean} True if the time slots overlap, false otherwise.
+   */
+  overlaps(otherTimeSlot) {
+    return (
+        this.#startTime < otherTimeSlot.getEndTime() &&
+        this.#endTime > otherTimeSlot.getStartTime()
+    )
+  }
 }
