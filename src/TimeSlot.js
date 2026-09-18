@@ -24,12 +24,29 @@ export class TimeSlot {
 
   /**
    * Creates a new TimeSlot instance with the specified start and end times.
-   * Throws a RangeError if the start time is not before the end time.
+   * Throws a TypeError if the start or end time is not a valid Date.
+   * Throws an Error if the start time is not before the end time.
    *
    * @param {Date} startTime - The start time of the time slot.
    * @param {Date} endTime - The end time of the time slot.
    */
   constructor(startTime, endTime) {
+    if (!(startTime instanceof Date)) {
+      throw new TypeError('startTime must be a Date')
+    }
+
+    if (!(endTime instanceof Date)) {
+      throw new TypeError('endTime must be a Date')
+    }
+
+    if (Number.isNaN(startTime.getTime())) {
+      throw new TypeError('startTime must be a valid Date')
+    }
+
+    if (Number.isNaN(endTime.getTime())) {
+      throw new TypeError('endTime must be a valid Date')
+    }
+
     if (startTime >= endTime) {
       throw new Error('startTime must be before endTime')
     }
