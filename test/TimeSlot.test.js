@@ -47,16 +47,73 @@ describe('TimeSlot', () => {
 
   // Test that the overlaps method returns true when time slots overlap
   it('returns true when time slots overlap', () => {
-    const firstTimeSlot = new TimeSlot(
-        new Date('2026-09-20T10:00:00'),
-        new Date('2026-09-20T11:00:00')
-    )
+    const firstTimeSlot = new TimeSlot(new Date('2026-09-20T10:00:00'), new Date('2026-09-20T11:00:00'))
 
-    const secondTimeSlot = new TimeSlot(
-        new Date('2026-09-20T10:30:00'),
-        new Date('2026-09-20T11:30:00')
-    )
+    const secondTimeSlot = new TimeSlot(new Date('2026-09-20T10:30:00'), new Date('2026-09-20T11:30:00'))
 
     expect(firstTimeSlot.overlaps(secondTimeSlot)).toBe(true)
+  })
+
+  // Test that the overlaps method returns true when time slots partially overlap
+  it('returns true when time slots partially overlap', () => {
+    const firstTimeSlot = new TimeSlot(new Date('2026-09-20T10:00:00'), new Date('2026-09-20T11:00:00'))
+
+    const secondTimeSlot = new TimeSlot(new Date('2026-09-20T10:30:00'), new Date('2026-09-20T11:30:00'))
+
+    expect(firstTimeSlot.overlaps(secondTimeSlot)).toBe(true)
+  })
+
+  // Test that the overlaps method returns true when the first time slot is completely inside the second time slot
+  it('returns true when the first time slot is inside the second', () => {
+    const firstTimeSlot = new TimeSlot(new Date('2026-09-20T10:30:00'), new Date('2026-09-20T11:00:00'))
+
+    const secondTimeSlot = new TimeSlot(new Date('2026-09-20T10:00:00'), new Date('2026-09-20T12:00:00'))
+
+    expect(firstTimeSlot.overlaps(secondTimeSlot)).toBe(true)
+  })
+
+  // Test that the overlaps method returns true when the second time slot is completely inside the first time slot
+  it('returns true when the second time slot is inside the first', () => {
+    const firstTimeSlot = new TimeSlot(new Date('2026-09-20T10:00:00'), new Date('2026-09-20T12:00:00'))
+
+    const secondTimeSlot = new TimeSlot(new Date('2026-09-20T10:30:00'), new Date('2026-09-20T11:00:00'))
+
+    expect(firstTimeSlot.overlaps(secondTimeSlot)).toBe(true)
+  })
+
+  // Test that the overlaps method returns true when time slots have the same start and end time
+  it('returns true when time slots have the same start and end time', () => {
+    const firstTimeSlot = new TimeSlot(new Date('2026-09-20T10:00:00'), new Date('2026-09-20T11:00:00'))
+
+    const secondTimeSlot = new TimeSlot(new Date('2026-09-20T10:00:00'), new Date('2026-09-20T11:00:00'))
+
+    expect(firstTimeSlot.overlaps(secondTimeSlot)).toBe(true)
+  })
+
+  // Test that the overlaps method returns false when the first time slot ends when the second starts
+  it('returns false when the first time slot ends when the second starts', () => {
+    const firstTimeSlot = new TimeSlot(new Date('2026-09-20T10:00:00'), new Date('2026-09-20T11:00:00'))
+
+    const secondTimeSlot = new TimeSlot(new Date('2026-09-20T11:00:00'), new Date('2026-09-20T12:00:00'))
+
+    expect(firstTimeSlot.overlaps(secondTimeSlot)).toBe(false)
+  })
+
+  // Test that the overlaps method returns false when the first time slot starts when the second ends
+  it('returns false when the first time slot starts when the second ends', () => {
+    const firstTimeSlot = new TimeSlot(new Date('2026-09-20T11:00:00'), new Date('2026-09-20T12:00:00'))
+
+    const secondTimeSlot = new TimeSlot(new Date('2026-09-20T10:00:00'), new Date('2026-09-20T11:00:00'))
+
+    expect(firstTimeSlot.overlaps(secondTimeSlot)).toBe(false)
+  })
+
+  // Test that the overlaps method returns false when the time slots are completely separate
+  it('returns false when time slots are separate', () => {
+    const firstTimeSlot = new TimeSlot(new Date('2026-09-20T10:00:00'), new Date('2026-09-20T11:00:00'))
+
+    const secondTimeSlot = new TimeSlot(new Date('2026-09-20T12:00:00'), new Date('2026-09-20T13:00:00'))
+
+    expect(firstTimeSlot.overlaps(secondTimeSlot)).toBe(false)
   })
 })

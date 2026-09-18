@@ -1,6 +1,6 @@
 /**
  * Contains the TimeSlot class.
- * 
+ *
  * @file src/TimeSlot.js
  * @author Isabella Luther <il223at@student.lnu.se>
  * @version 1.0.0
@@ -9,34 +9,34 @@
 
 /**
  * Represents a time slot with a start and end time.
- * 
+ *
  * @class TimeSlot
  */
 export class TimeSlot {
-    /**
-     * The start time of the time slot.
-     */
-    #startTime
-    /**
-     * The end time of the time slot.
-     */
-    #endTime
+  /**
+   * The start time of the time slot.
+   */
+  #startTime
+  /**
+   * The end time of the time slot.
+   */
+  #endTime
 
   /**
    * Creates a new TimeSlot instance with the specified start and end times.
    * Throws a RangeError if the start time is not before the end time.
-   * 
+   *
    * @param {Date} startTime - The start time of the time slot.
    * @param {Date} endTime - The end time of the time slot.
    */
-    constructor(startTime, endTime) {
+  constructor(startTime, endTime) {
     if (startTime >= endTime) {
-        throw new Error('startTime must be before endTime')
+      throw new Error('startTime must be before endTime')
     }
 
     this.#startTime = startTime
     this.#endTime = endTime
-    }
+  }
 
   /**
    * Gets the start time of the time slot.
@@ -70,14 +70,11 @@ export class TimeSlot {
 
   /**
    * Checks if this time slot overlaps with another time slot.
-   * 
+   *
    * @param {TimeSlot} otherTimeSlot - The other time slot to check for overlap.
    * @returns {boolean} True if the time slots overlap, false otherwise.
    */
   overlaps(otherTimeSlot) {
-    return (
-        this.#startTime < otherTimeSlot.getEndTime() &&
-        this.#endTime > otherTimeSlot.getStartTime()
-    )
+    return this.#startTime < otherTimeSlot.getEndTime() && this.#endTime > otherTimeSlot.getStartTime()
   }
 }
