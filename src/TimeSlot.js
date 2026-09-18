@@ -87,11 +87,16 @@ export class TimeSlot {
 
   /**
    * Checks if this time slot overlaps with another time slot.
-   *
+   * Throws a TypeError if the argument is not a TimeSlot instance.
+   * 
    * @param {TimeSlot} otherTimeSlot - The other time slot to check for overlap.
    * @returns {boolean} True if the time slots overlap, false otherwise.
    */
   overlaps(otherTimeSlot) {
+    if (!(otherTimeSlot instanceof TimeSlot)) {
+      throw new TypeError('otherTimeSlot must be a TimeSlot')
+    }
+
     return this.#startTime < otherTimeSlot.getEndTime() && this.#endTime > otherTimeSlot.getStartTime()
   }
 }
