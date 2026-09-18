@@ -14,6 +14,7 @@ import { TimeSlot } from '../src/TimeSlot.js'
  * Tests for the TimeSlot class.
  */
 describe('TimeSlot', () => {
+  // Test that the start and end times are returned correctly
   it('returns the start and end time', () => {
     const startTime = new Date('2026-09-20T10:00:00')
     const endTime = new Date('2026-09-20T11:00:00')
@@ -23,4 +24,14 @@ describe('TimeSlot', () => {
     expect(timeSlot.getStartTime()).toBe(startTime)
     expect(timeSlot.getEndTime()).toBe(endTime)
   })
+
+  // Test that an error is thrown when the start time is after the end time
+  it('throws an error when start time is after end time', () => {
+  const startTime = new Date('2026-09-20T12:00:00')
+  const endTime = new Date('2026-09-20T10:00:00')
+
+  expect(() => {
+    new TimeSlot(startTime, endTime)
+  }).toThrow()
+})
 })
