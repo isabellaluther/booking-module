@@ -156,4 +156,16 @@ describe('TimeSlot', () => {
       new TimeSlot(startTime, endTime)
     }).toThrow()
   })
+
+  // Test that the overlaps method throws a TypeError when comparing with something that is not a TimeSlot
+  it('throws a TypeError when comparing with something that is not a TimeSlot', () => {
+    const timeSlot = new TimeSlot(
+        new Date('2026-09-20T10:00:00'),
+        new Date('2026-09-20T11:00:00')
+    )
+
+    expect(() => {
+        timeSlot.overlaps('not a time slot')
+    }).toThrow('otherTimeSlot must be a TimeSlot')
+  })
 })
