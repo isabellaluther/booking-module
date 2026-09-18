@@ -55,4 +55,16 @@ export class TimeSlot {
   getEndTime() {
     return this.#endTime
   }
+
+  /**
+   * Gets the duration of the time slot in minutes.
+   *
+   * @returns {number} The duration of the time slot in minutes.
+   */
+  getDurationInMinutes() {
+    const durationInMilliseconds = this.#endTime - this.#startTime
+    const millisecondsPerMinute = 1000 * 60
+
+    return durationInMilliseconds / millisecondsPerMinute
+  }
 }
