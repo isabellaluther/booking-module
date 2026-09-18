@@ -24,14 +24,19 @@ export class TimeSlot {
 
   /**
    * Creates a new TimeSlot instance with the specified start and end times.
+   * Throws a RangeError if the start time is not before the end time.
    * 
    * @param {Date} startTime - The start time of the time slot.
    * @param {Date} endTime - The end time of the time slot.
    */
-  constructor(startTime, endTime) {
+    constructor(startTime, endTime) {
+    if (startTime >= endTime) {
+        throw new Error('startTime must be before endTime')
+    }
+
     this.#startTime = startTime
     this.#endTime = endTime
-  }
+    }
 
   /**
    * Gets the start time of the time slot.
