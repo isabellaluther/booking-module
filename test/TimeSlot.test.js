@@ -116,4 +116,44 @@ describe('TimeSlot', () => {
 
     expect(firstTimeSlot.overlaps(secondTimeSlot)).toBe(false)
   })
+
+  // Test that the constructor throws an error when the start time is after the end time
+  it('throws an error when start time is not a Date', () => {
+    const startTime = '2026-09-20T10:00:00'
+    const endTime = new Date('2026-09-20T11:00:00')
+
+    expect(() => {
+      new TimeSlot(startTime, endTime)
+    }).toThrow()
+  })
+
+  // Test that the constructor throws an error when the start time is after the end time
+  it('throws an error when end time is not a Date', () => {
+    const startTime = new Date('2026-09-20T10:00:00')
+    const endTime = '2026-09-20T11:00:00'
+
+    expect(() => {
+      new TimeSlot(startTime, endTime)
+    }).toThrow()
+  })
+
+  // Test that the constructor throws an error when the start time is after the end time
+  it('throws an error when start time is an invalid Date', () => {
+    const startTime = new Date('invalid')
+    const endTime = new Date('2026-09-20T11:00:00')
+
+    expect(() => {
+      new TimeSlot(startTime, endTime)
+    }).toThrow()
+  })
+
+  // Test that the constructor throws an error when the end time is before the start time
+  it('throws an error when end time is an invalid Date', () => {
+    const startTime = new Date('2026-09-20T10:00:00')
+    const endTime = new Date('invalid')
+
+    expect(() => {
+      new TimeSlot(startTime, endTime)
+    }).toThrow()
+  })
 })
