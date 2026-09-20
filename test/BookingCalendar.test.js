@@ -106,4 +106,17 @@ describe('BookingCalendar', () => {
 
     expect(calendar.getBookings()).toEqual([firstBooking, secondBooking])
   })
+
+  // Test that getting a booking by an id that does not exist returns undefined.
+  it('returns a booking by id', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+    const timeSlot = new TimeSlot(new Date('2026-09-20T10:00:00'), new Date('2026-09-20T11:00:00'))
+
+    const booking = new Booking('booking-1', resource, timeSlot)
+
+    calendar.addBooking(booking)
+
+    expect(calendar.getBookingById('booking-1')).toBe(booking)
+  })
 })
