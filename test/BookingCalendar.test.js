@@ -346,4 +346,16 @@ describe('BookingCalendar', () => {
       calendar.getAvailableTimeSlots(resource, searchTimeSlot, NaN)
     }).toThrow('durationInMinutes must be a valid number')
   })
+
+  // Test that an empty array is returned when the duration is longer than the search time slot.
+  it('returns an empty array when duration is longer than the search time slot', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+
+    const searchTimeSlot = new TimeSlot(new Date('2026-09-20T09:00:00'), new Date('2026-09-20T10:00:00'))
+
+    const availableTimeSlots = calendar.getAvailableTimeSlots(resource, searchTimeSlot, 120)
+
+    expect(availableTimeSlots).toEqual([])
+  })
 })
