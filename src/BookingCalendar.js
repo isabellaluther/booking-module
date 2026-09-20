@@ -40,6 +40,8 @@ export class BookingCalendar {
    *
    * @param {Booking} booking - The booking to add.
    * @throws {TypeError} If the booking is not an instance of Booking.
+   * @throws {Error} If the booking id already exists.
+   * @throws {Error} If the booking conflicts with an existing booking.
    */
   addBooking(booking) {
     if (!(booking instanceof Booking)) {
@@ -52,6 +54,26 @@ export class BookingCalendar {
       throw new Error('booking id already exists')
     }
 
+    if (this.hasBookingConflict(booking)) {
+      throw new Error('booking conflicts with an existing booking')
+    }
+
     this.#bookings.push(booking)
+  }
+
+  /**
+   * Checks if the given booking conflicts with any existing bookings in the calendar.
+   *
+   * @param {Booking} booking - The booking to check for conflicts.
+   * @returns {boolean} True if there is a conflict, false otherwise.
+   */
+  hasBookingConflict(booking) {
+    return this.#bookings.some((existingBooking) => {
+      const sameResource = existingBooking.getResource().getId() === booking.getResource().getId()
+
+      const overlappingTime = existingBooking.getTimeSlot().overlaps(booking.getTimeSlot())
+
+      return sameResource && overlappingTime
+    })
   }
 }
