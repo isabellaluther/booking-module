@@ -72,6 +72,22 @@ export class BookingCalendar {
   }
 
   /**
+   * Cancels a booking by its id.
+   *
+   * @param {string} bookingId - The id of the booking to cancel.
+   * @throws {Error} If the booking id does not exist.
+   */
+  cancelBooking(bookingId) {
+    const bookingIndex = this.#bookings.findIndex((booking) => booking.getId() === bookingId)
+
+    if (bookingIndex === -1) {
+      throw new Error('booking id does not exist')
+    }
+
+    this.#bookings.splice(bookingIndex, 1)
+  }
+
+  /**
    * Checks if the given booking conflicts with any existing bookings in the calendar.
    *
    * @param {Booking} booking - The booking to check for conflicts.
