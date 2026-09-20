@@ -65,4 +65,24 @@ describe('BookingCalendar', () => {
       calendar.addBooking(secondBooking)
     }).toThrow('booking id already exists')
   })
+
+  // Test that adding a booking that overlaps with an existing booking for the same resource throws an error.
+  it('throws an error when bookings overlap for the same resource', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+
+    const firstTimeSlot = new TimeSlot(new Date('2026-09-20T10:00:00'), new Date('2026-09-20T11:00:00'))
+
+    const secondTimeSlot = new TimeSlot(new Date('2026-09-20T10:30:00'), new Date('2026-09-20T11:30:00'))
+
+    const firstBooking = new Booking('booking-1', resource, firstTimeSlot)
+
+    const secondBooking = new Booking('booking-2', resource, secondTimeSlot)
+
+    calendar.addBooking(firstBooking)
+
+    expect(() => {
+      calendar.addBooking(secondBooking)
+    }).toThrow('booking conflicts with an existing booking')
+  })
 })
