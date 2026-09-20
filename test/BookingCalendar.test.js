@@ -126,4 +126,18 @@ describe('BookingCalendar', () => {
 
     expect(calendar.getBookingById('booking-999')).toBeUndefined()
   })
+
+  // Test that removing a booking by id works correctly.
+  it('removes a booking by id', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+    const timeSlot = new TimeSlot(new Date('2026-09-20T10:00:00'), new Date('2026-09-20T11:00:00'))
+
+    const booking = new Booking('booking-1', resource, timeSlot)
+
+    calendar.addBooking(booking)
+    calendar.cancelBooking('booking-1')
+
+    expect(calendar.getBookings()).toEqual([])
+  })
 })
