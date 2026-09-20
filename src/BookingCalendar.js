@@ -9,6 +9,7 @@
 
 import { Booking } from './Booking.js'
 import { Resource } from './Resource.js'
+import { TimeSlot } from './TimeSlot.js'
 
 /**
  * Manages bookings in a booking calendar.
@@ -87,6 +88,40 @@ export class BookingCalendar {
         bookingDate.getDate() === date.getDate()
       )
     })
+  }
+
+  /**
+   * Gets the available time slots for a specific resource within a given search time slot and duration.
+   *
+   * @param {Resource} resource - The resource to check availability for.
+   * @param {TimeSlot} searchTimeSlot - The time slot to search within.
+   * @param {number} durationInMinutes - The duration of the desired time slot in minutes.
+   * @returns {Array<TimeSlot>} The available time slots for the specified resource and time slot.
+   */
+  getAvailableTimeSlots(resource, searchTimeSlot, durationInMinutes) {
+    const availableTimeSlots = []
+    const resourceBookings = this.getBookingsForResource(resource)
+
+    let currentStartTime = searchTimeSlot.getStartTime()
+    const searchEndTime = searchTimeSlot.getEndTime()
+
+    while (currentStartTime < searchEndTime) {
+      const currentEndTime = new Date(currentStartTime.getTime() + durationInMinutes * 60 * 1000)
+
+      if (currentEndTime <= searchEndTime) {
+        const currentTimeSlot = new TimeSlot(currentStartTime, currentEndTime)
+
+        const hasConflict = resourceBookings.some((booking) => booking.getTimeSlot().overlaps(currentTimeSlot))
+
+        if (!hasConflict) {
+          availableTimeSlots.push(currentTimeSlot)
+        }
+      }
+
+      currentStartTime = currentEndTime
+    }
+
+    return availableTimeSlots
   }
 
   /**
