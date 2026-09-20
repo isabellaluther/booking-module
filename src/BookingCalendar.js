@@ -66,8 +66,18 @@ export class BookingCalendar {
    *
    * @param {Date} date - The date to get bookings for.
    * @returns {Array<Booking>} The bookings for the specified date.
+   * @throws {TypeError} If the date is not an instance of Date.
+   * @throws {TypeError} If the date is an invalid Date.
    */
   getBookingsForDate(date) {
+    if (!(date instanceof Date)) {
+      throw new TypeError('date must be a Date')
+    }
+
+    if (Number.isNaN(date.getTime())) {
+      throw new TypeError('date must be a valid Date')
+    }
+
     return this.#bookings.filter((booking) => {
       const bookingDate = booking.getTimeSlot().getStartTime()
 
