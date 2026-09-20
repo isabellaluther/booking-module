@@ -179,4 +179,12 @@ describe('BookingCalendar', () => {
       calendar.getBookingsForResource('not a resource')
     }).toThrow('resource must be a Resource')
   })
+
+  // Test that getting bookings for a resource with no bookings returns an empty array.
+  it('returns an empty array when resource has no bookings', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+
+    expect(calendar.getBookingsForResource(resource)).toEqual([])
+  })
 })
