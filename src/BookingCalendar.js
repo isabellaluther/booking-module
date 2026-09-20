@@ -97,8 +97,28 @@ export class BookingCalendar {
    * @param {TimeSlot} searchTimeSlot - The time slot to search within.
    * @param {number} durationInMinutes - The duration of the desired time slot in minutes.
    * @returns {Array<TimeSlot>} The available time slots for the specified resource and time slot.
+   * @throws {TypeError} If the resource is not an instance of Resource.
+   * @throws {TypeError} If the search time slot is not an instance of TimeSlot.
+   * @throws {TypeError} If the duration is not a number.
+   * @throws {Error} If the duration is zero or negative.
    */
   getAvailableTimeSlots(resource, searchTimeSlot, durationInMinutes) {
+    if (!(resource instanceof Resource)) {
+      throw new TypeError('resource must be a Resource')
+    }
+
+    if (!(searchTimeSlot instanceof TimeSlot)) {
+      throw new TypeError('searchTimeSlot must be a TimeSlot')
+    }
+
+    if (typeof durationInMinutes !== 'number') {
+      throw new TypeError('durationInMinutes must be a number')
+    }
+
+    if (durationInMinutes <= 0) {
+      throw new Error('durationInMinutes must be greater than zero')
+    }
+
     const availableTimeSlots = []
     const resourceBookings = this.getBookingsForResource(resource)
 
