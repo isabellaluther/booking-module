@@ -206,4 +206,22 @@ describe('BookingCalendar', () => {
 
     expect(calendar.getBookingsForDate(new Date('2026-09-20'))).toEqual([firstBooking])
   })
+
+  // Test that getting bookings for a non-Date throws an error.
+  it('throws an error when date is not a Date', () => {
+    const calendar = new BookingCalendar()
+
+    expect(() => {
+      calendar.getBookingsForDate('2026-09-20')
+    }).toThrow('date must be a Date')
+  })
+
+  // Test that getting bookings for an invalid Date throws an error.
+  it('throws an error when date is an invalid Date', () => {
+    const calendar = new BookingCalendar()
+
+    expect(() => {
+      calendar.getBookingsForDate(new Date('invalid'))
+    }).toThrow('date must be a valid Date')
+  })
 })
