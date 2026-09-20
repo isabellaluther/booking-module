@@ -289,4 +289,49 @@ describe('BookingCalendar', () => {
 
     expect(availableTimeSlots[1].getStartTime()).toEqual(new Date('2026-09-20T10:00:00'))
   })
+
+  // Test that an error is thrown when the resource is not a Resource.
+  it('throws an error when resource is not a Resource', () => {
+    const calendar = new BookingCalendar()
+
+    const searchTimeSlot = new TimeSlot(new Date('2026-09-20T09:00:00'), new Date('2026-09-20T12:00:00'))
+
+    expect(() => {
+      calendar.getAvailableTimeSlots('not a resource', searchTimeSlot, 60)
+    }).toThrow('resource must be a Resource')
+  })
+
+  // Test that an error is thrown when the search time slot is not a TimeSlot.
+  it('throws an error when search time slot is not a TimeSlot', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+
+    expect(() => {
+      calendar.getAvailableTimeSlots(resource, 'not a time slot', 60)
+    }).toThrow('searchTimeSlot must be a TimeSlot')
+  })
+
+  // Test that an error is thrown when the duration is not a positive number.
+  it('throws an error when duration is not a number', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+
+    const searchTimeSlot = new TimeSlot(new Date('2026-09-20T09:00:00'), new Date('2026-09-20T12:00:00'))
+
+    expect(() => {
+      calendar.getAvailableTimeSlots(resource, searchTimeSlot, '60')
+    }).toThrow('durationInMinutes must be a number')
+  })
+
+  // Test that an error is thrown when the duration is zero or negative.
+  it('throws an error when duration is zero or negative', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+
+    const searchTimeSlot = new TimeSlot(new Date('2026-09-20T09:00:00'), new Date('2026-09-20T12:00:00'))
+
+    expect(() => {
+      calendar.getAvailableTimeSlots(resource, searchTimeSlot, 0)
+    }).toThrow('durationInMinutes must be greater than zero')
+  })
 })
