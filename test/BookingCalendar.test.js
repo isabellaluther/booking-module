@@ -140,4 +140,13 @@ describe('BookingCalendar', () => {
 
     expect(calendar.getBookings()).toEqual([])
   })
+
+  // Test that cancelling a booking that does not exist throws an error.
+  it('throws an error when cancelling a booking that does not exist', () => {
+    const calendar = new BookingCalendar()
+
+    expect(() => {
+      calendar.cancelBooking('booking-999')
+    }).toThrow('booking id does not exist')
+  })
 })
