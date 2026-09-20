@@ -8,6 +8,7 @@
  */
 
 import { Booking } from './Booking.js'
+import { Resource } from './Resource.js'
 
 /**
  * Manages bookings in a booking calendar.
@@ -48,10 +49,15 @@ export class BookingCalendar {
   /**
    * Gets all bookings for a specific resource.
    *
-   * @param {object} resource - The resource to get bookings for.
+   * @param {Resource} resource - The resource to get bookings for.
    * @returns {Array<Booking>} The bookings for the specified resource.
+   * @throws {TypeError} If the resource is not an instance of Resource.
    */
   getBookingsForResource(resource) {
+    if (!(resource instanceof Resource)) {
+      throw new TypeError('resource must be a Resource')
+    }
+
     return this.#bookings.filter((booking) => booking.getResource().getId() === resource.getId())
   }
 
