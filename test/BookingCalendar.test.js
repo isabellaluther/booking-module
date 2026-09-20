@@ -251,4 +251,26 @@ describe('BookingCalendar', () => {
 
     expect(availableTimeSlots[2].getEndTime()).toEqual(new Date('2026-09-20T12:00:00'))
   })
+
+  // Test that getting available time slots excludes time slots that conflict with an existing booking.
+  it('excludes time slots that conflict with an existing booking', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+
+    const bookedTimeSlot = new TimeSlot(new Date('2026-09-20T10:00:00'), new Date('2026-09-20T11:00:00'))
+
+    const booking = new Booking('booking-1', resource, bookedTimeSlot)
+
+    calendar.addBooking(booking)
+
+    const searchTimeSlot = new TimeSlot(new Date('2026-09-20T09:00:00'), new Date('2026-09-20T12:00:00'))
+
+    const availableTimeSlots = calendar.getAvailableTimeSlots(resource, searchTimeSlot, 60)
+
+    expect(availableTimeSlots.length).toBe(2)
+
+    expect(availableTimeSlots[0].getStartTime()).toEqual(new Date('2026-09-20T09:00:00'))
+
+    expect(availableTimeSlots[1].getStartTime()).toEqual(new Date('2026-09-20T11:00:00'))
+  })
 })
