@@ -419,4 +419,26 @@ describe('BookingCalendar', () => {
 
     expect(availableTimeSlots).toEqual([])
   })
+
+  // Test that time slots booked for another resource do not affect availability for the current resource.
+  it('does not exclude time slots booked for another resource', () => {
+    const calendar = new BookingCalendar()
+
+    const firstResource = new Resource('room-101', 'Study Room 101')
+    const secondResource = new Resource('room-102', 'Study Room 102')
+
+    const booking = new Booking(
+      'booking-1',
+      secondResource,
+      new TimeSlot(new Date('2026-09-20T09:30:00'), new Date('2026-09-20T10:30:00'))
+    )
+
+    calendar.addBooking(booking)
+
+    const searchTimeSlot = new TimeSlot(new Date('2026-09-20T09:00:00'), new Date('2026-09-20T11:00:00'))
+
+    const availableTimeSlots = calendar.getAvailableTimeSlots(firstResource, searchTimeSlot, 60)
+
+    expect(availableTimeSlots.length).toBe(2)
+  })
 })
