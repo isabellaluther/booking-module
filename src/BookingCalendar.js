@@ -115,6 +115,10 @@ export class BookingCalendar {
       throw new TypeError('durationInMinutes must be a number')
     }
 
+    if (Number.isNaN(durationInMinutes)) {
+      throw new TypeError('durationInMinutes must be a valid number')
+    }
+
     if (durationInMinutes <= 0) {
       throw new Error('durationInMinutes must be greater than zero')
     }
