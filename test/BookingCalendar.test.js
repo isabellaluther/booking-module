@@ -119,4 +119,11 @@ describe('BookingCalendar', () => {
 
     expect(calendar.getBookingById('booking-1')).toBe(booking)
   })
+
+  // Test that getting a booking by an id that does not exist returns undefined.
+  it('returns undefined when booking id does not exist', () => {
+    const calendar = new BookingCalendar()
+
+    expect(calendar.getBookingById('booking-999')).toBeUndefined()
+  })
 })
