@@ -85,4 +85,25 @@ describe('BookingCalendar', () => {
       calendar.addBooking(secondBooking)
     }).toThrow('booking conflicts with an existing booking')
   })
+
+  // Test that overlapping time slots for different resources are allowed.
+  it('allows overlapping time slots for different resources', () => {
+    const calendar = new BookingCalendar()
+
+    const firstResource = new Resource('room-101', 'Study Room 101')
+    const secondResource = new Resource('room-102', 'Study Room 102')
+
+    const firstTimeSlot = new TimeSlot(new Date('2026-09-20T10:00:00'), new Date('2026-09-20T11:00:00'))
+
+    const secondTimeSlot = new TimeSlot(new Date('2026-09-20T10:30:00'), new Date('2026-09-20T11:30:00'))
+
+    const firstBooking = new Booking('booking-1', firstResource, firstTimeSlot)
+
+    const secondBooking = new Booking('booking-2', secondResource, secondTimeSlot)
+
+    calendar.addBooking(firstBooking)
+    calendar.addBooking(secondBooking)
+
+    expect(calendar.getBookings()).toEqual([firstBooking, secondBooking])
+  })
 })
