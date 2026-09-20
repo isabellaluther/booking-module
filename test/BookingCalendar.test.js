@@ -224,4 +224,11 @@ describe('BookingCalendar', () => {
       calendar.getBookingsForDate(new Date('invalid'))
     }).toThrow('date must be a valid Date')
   })
+
+  // Test that getting bookings for a date with no bookings returns an empty array.
+  it('returns an empty array when there are no bookings for the date', () => {
+    const calendar = new BookingCalendar()
+
+    expect(calendar.getBookingsForDate(new Date('2026-09-20'))).toEqual([])
+  })
 })
