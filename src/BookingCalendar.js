@@ -7,6 +7,8 @@
  * @license Unlicense
  */
 
+import { Booking } from './Booking.js'
+
 /**
  * Manages bookings in a booking calendar.
  */
@@ -27,9 +29,23 @@ export class BookingCalendar {
   /**
    * Gets all bookings in the calendar.
    *
-   * @returns {Array} A copy of the bookings in the calendar.
+   * @returns {Array<Booking>} A copy of the bookings in the calendar.
    */
   getBookings() {
     return [...this.#bookings]
+  }
+
+  /**
+   * Adds a booking to the calendar.
+   *
+   * @param {Booking} booking - The booking to add.
+   * @throws {TypeError} If the booking is not an instance of Booking.
+   */
+  addBooking(booking) {
+    if (!(booking instanceof Booking)) {
+      throw new TypeError('booking must be a Booking')
+    }
+
+    this.#bookings.push(booking)
   }
 }
