@@ -46,6 +46,16 @@ export class BookingCalendar {
   }
 
   /**
+   * Gets all bookings for a specific resource.
+   *
+   * @param {object} resource - The resource to get bookings for.
+   * @returns {Array<Booking>} The bookings for the specified resource.
+   */
+  getBookingsForResource(resource) {
+    return this.#bookings.filter((booking) => booking.getResource().getId() === resource.getId())
+  }
+
+  /**
    * Adds a booking to the calendar.
    *
    * @param {Booking} booking - The booking to add.
