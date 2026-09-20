@@ -22,11 +22,28 @@ export class Resource {
 
   /**
    * Creates a new Resource instance with the specified id and name.
+   * Throws an error if the id or name is invalid.
    *
    * @param {string} id - The unique identifier of the resource.
    * @param {string} name - The name of the resource.
    */
   constructor(id, name) {
+    if (typeof id !== 'string') {
+      throw new TypeError('id must be a string')
+    }
+
+    if (typeof name !== 'string') {
+      throw new TypeError('name must be a string')
+    }
+
+    if (id.trim() === '') {
+      throw new Error('id must not be empty')
+    }
+
+    if (name.trim() === '') {
+      throw new Error('name must not be empty')
+    }
+
     this.#id = id
     this.#name = name
   }
