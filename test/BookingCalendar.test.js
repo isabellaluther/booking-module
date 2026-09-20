@@ -334,4 +334,16 @@ describe('BookingCalendar', () => {
       calendar.getAvailableTimeSlots(resource, searchTimeSlot, 0)
     }).toThrow('durationInMinutes must be greater than zero')
   })
+
+  // Test that an error is thrown when the duration is NaN.
+  it('throws an error when duration is NaN', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+
+    const searchTimeSlot = new TimeSlot(new Date('2026-09-20T09:00:00'), new Date('2026-09-20T12:00:00'))
+
+    expect(() => {
+      calendar.getAvailableTimeSlots(resource, searchTimeSlot, NaN)
+    }).toThrow('durationInMinutes must be a valid number')
+  })
 })
