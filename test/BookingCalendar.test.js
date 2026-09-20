@@ -45,4 +45,24 @@ describe('BookingCalendar', () => {
       calendar.addBooking('not a booking')
     }).toThrow('booking must be a Booking')
   })
+
+  // Test that adding a booking with an existing id throws an error.
+  it('throws an error when booking id already exists', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+
+    const firstTimeSlot = new TimeSlot(new Date('2026-09-20T10:00:00'), new Date('2026-09-20T11:00:00'))
+
+    const secondTimeSlot = new TimeSlot(new Date('2026-09-20T12:00:00'), new Date('2026-09-20T13:00:00'))
+
+    const firstBooking = new Booking('booking-1', resource, firstTimeSlot)
+
+    const secondBooking = new Booking('booking-1', resource, secondTimeSlot)
+
+    calendar.addBooking(firstBooking)
+
+    expect(() => {
+      calendar.addBooking(secondBooking)
+    }).toThrow('booking id already exists')
+  })
 })
