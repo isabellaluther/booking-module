@@ -9,6 +9,9 @@
 
 import { describe, expect, it } from 'vitest'
 import { BookingCalendar } from '../src/BookingCalendar.js'
+import { Booking } from '../src/Booking.js'
+import { Resource } from '../src/Resource.js'
+import { TimeSlot } from '../src/TimeSlot.js'
 
 /**
  * Tests for the BookingCalendar class.
@@ -19,5 +22,18 @@ describe('BookingCalendar', () => {
     const calendar = new BookingCalendar()
 
     expect(calendar.getBookings()).toEqual([])
+  })
+
+  // Test that a booking can be added to the calendar.
+  it('adds a booking to the calendar', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+    const timeSlot = new TimeSlot(new Date('2026-09-20T10:00:00'), new Date('2026-09-20T11:00:00'))
+
+    const booking = new Booking('booking-1', resource, timeSlot)
+
+    calendar.addBooking(booking)
+
+    expect(calendar.getBookings()).toEqual([booking])
   })
 })
