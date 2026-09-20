@@ -21,4 +21,32 @@ describe('Resource', () => {
     expect(resource.getId()).toBe('room-101')
     expect(resource.getName()).toBe('Study Room 101')
   })
+
+  // Test that the constructor throws an error when id is empty.
+  it('throws an error when id is empty', () => {
+    expect(() => {
+      new Resource('', 'Study Room 101')
+    }).toThrow()
+  })
+
+  // Test that the constructor throws an error when name is empty.
+  it('throws an error when name is empty', () => {
+    expect(() => {
+      new Resource('room-101', '')
+    }).toThrow()
+  })
+
+  // Test that the constructor throws an error when id is not a string.
+  it('throws an error when id is not a string', () => {
+    expect(() => {
+      new Resource(101, 'Study Room 101')
+    }).toThrow()
+  })
+
+  // Test that the constructor throws an error when name is not a string.
+  it('throws an error when name is not a string', () => {
+    expect(() => {
+      new Resource('room-101', 101)
+    }).toThrow()
+  })
 })

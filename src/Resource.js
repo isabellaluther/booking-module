@@ -22,7 +22,7 @@ export class Resource {
 
   /**
    * Creates a new Resource instance with the specified id and name.
-   * 
+   *
    * @param {string} id - The unique identifier of the resource.
    * @param {string} name - The name of the resource.
    */
