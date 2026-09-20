@@ -36,6 +36,16 @@ export class BookingCalendar {
   }
 
   /**
+   * Gets a booking by its id.
+   *
+   * @param {string} bookingId - The id of the booking to retrieve.
+   * @returns {Booking|undefined} The booking with the given id, or undefined if not found.
+   */
+  getBookingById(bookingId) {
+    return this.#bookings.find((booking) => booking.getId() === bookingId)
+  }
+
+  /**
    * Adds a booking to the calendar.
    *
    * @param {Booking} booking - The booking to add.
