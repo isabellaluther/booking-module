@@ -170,4 +170,13 @@ describe('BookingCalendar', () => {
 
     expect(calendar.getBookingsForResource(firstResource)).toEqual([firstBooking])
   })
+
+  // Test that getting bookings for a non-Resource throws an error.
+  it('throws an error when resource is not a Resource', () => {
+    const calendar = new BookingCalendar()
+
+    expect(() => {
+      calendar.getBookingsForResource('not a resource')
+    }).toThrow('resource must be a Resource')
+  })
 })
