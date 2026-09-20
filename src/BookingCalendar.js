@@ -62,6 +62,24 @@ export class BookingCalendar {
   }
 
   /**
+   * Gets all bookings for a specific date.
+   *
+   * @param {Date} date - The date to get bookings for.
+   * @returns {Array<Booking>} The bookings for the specified date.
+   */
+  getBookingsForDate(date) {
+    return this.#bookings.filter((booking) => {
+      const bookingDate = booking.getTimeSlot().getStartTime()
+
+      return (
+        bookingDate.getFullYear() === date.getFullYear() &&
+        bookingDate.getMonth() === date.getMonth() &&
+        bookingDate.getDate() === date.getDate()
+      )
+    })
+  }
+
+  /**
    * Adds a booking to the calendar.
    *
    * @param {Booking} booking - The booking to add.
