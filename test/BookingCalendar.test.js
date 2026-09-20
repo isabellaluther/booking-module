@@ -358,4 +358,18 @@ describe('BookingCalendar', () => {
 
     expect(availableTimeSlots).toEqual([])
   })
+
+  // Test that one time slot is returned when the duration exactly matches the search time slot.
+  it('returns one time slot when duration matches the search time slot', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+
+    const searchTimeSlot = new TimeSlot(new Date('2026-09-20T09:00:00'), new Date('2026-09-20T10:00:00'))
+
+    const availableTimeSlots = calendar.getAvailableTimeSlots(resource, searchTimeSlot, 60)
+
+    expect(availableTimeSlots.length).toBe(1)
+    expect(availableTimeSlots[0].getStartTime()).toEqual(new Date('2026-09-20T09:00:00'))
+    expect(availableTimeSlots[0].getEndTime()).toEqual(new Date('2026-09-20T10:00:00'))
+  })
 })
