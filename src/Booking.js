@@ -33,8 +33,28 @@ export class Booking {
    * @param {string} id - The unique identifier of the booking.
    * @param {Resource} resource - The resource being booked.
    * @param {TimeSlot} timeSlot - The time slot of the booking.
+   * @throws {TypeError} If the id is not a string.
+   * @throws {Error} If the id is empty.
+   * @throws {TypeError} If the resource is not a Resource.
+   * @throws {TypeError} If the time slot is not a TimeSlot.
    */
   constructor(id, resource, timeSlot) {
+    if (typeof id !== 'string') {
+      throw new TypeError('id must be a string')
+    }
+
+    if (id.trim() === '') {
+      throw new Error('id must not be empty')
+    }
+
+    if (!(resource instanceof Resource)) {
+      throw new TypeError('resource must be a Resource')
+    }
+
+    if (!(timeSlot instanceof TimeSlot)) {
+      throw new TypeError('timeSlot must be a TimeSlot')
+    }
+
     this.#id = id
     this.#resource = resource
     this.#timeSlot = timeSlot
