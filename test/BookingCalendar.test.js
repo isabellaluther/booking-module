@@ -149,4 +149,25 @@ describe('BookingCalendar', () => {
       calendar.cancelBooking('booking-999')
     }).toThrow('booking id does not exist')
   })
+
+  // Test that getting bookings for a specific resource works correctly.
+  it('returns bookings for a specific resource', () => {
+    const calendar = new BookingCalendar()
+
+    const firstResource = new Resource('room-101', 'Study Room 101')
+    const secondResource = new Resource('room-102', 'Study Room 102')
+
+    const firstTimeSlot = new TimeSlot(new Date('2026-09-20T10:00:00'), new Date('2026-09-20T11:00:00'))
+
+    const secondTimeSlot = new TimeSlot(new Date('2026-09-20T12:00:00'), new Date('2026-09-20T13:00:00'))
+
+    const firstBooking = new Booking('booking-1', firstResource, firstTimeSlot)
+
+    const secondBooking = new Booking('booking-2', secondResource, secondTimeSlot)
+
+    calendar.addBooking(firstBooking)
+    calendar.addBooking(secondBooking)
+
+    expect(calendar.getBookingsForResource(firstResource)).toEqual([firstBooking])
+  })
 })
