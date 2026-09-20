@@ -231,4 +231,24 @@ describe('BookingCalendar', () => {
 
     expect(calendar.getBookingsForDate(new Date('2026-09-20'))).toEqual([])
   })
+
+  // Test that getting available time slots works correctly when there are no bookings.
+  it('returns available time slots when there are no bookings', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+
+    const searchTimeSlot = new TimeSlot(new Date('2026-09-20T09:00:00'), new Date('2026-09-20T12:00:00'))
+
+    const availableTimeSlots = calendar.getAvailableTimeSlots(resource, searchTimeSlot, 60)
+
+    expect(availableTimeSlots.length).toBe(3)
+
+    expect(availableTimeSlots[0].getStartTime()).toEqual(new Date('2026-09-20T09:00:00'))
+
+    expect(availableTimeSlots[0].getEndTime()).toEqual(new Date('2026-09-20T10:00:00'))
+
+    expect(availableTimeSlots[2].getStartTime()).toEqual(new Date('2026-09-20T11:00:00'))
+
+    expect(availableTimeSlots[2].getEndTime()).toEqual(new Date('2026-09-20T12:00:00'))
+  })
 })
