@@ -441,4 +441,16 @@ describe('BookingCalendar', () => {
 
     expect(availableTimeSlots.length).toBe(2)
   })
+
+  // Test that an error is thrown when the duration is not an integer.
+  it('throws an error when duration is not an integer', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+
+    const searchTimeSlot = new TimeSlot(new Date('2026-09-20T09:00:00'), new Date('2026-09-20T12:00:00'))
+
+    expect(() => {
+      calendar.getAvailableTimeSlots(resource, searchTimeSlot, 30.5)
+    }).toThrow('durationInMinutes must be an integer')
+  })
 })
