@@ -36,4 +36,13 @@ describe('BookingCalendar', () => {
 
     expect(calendar.getBookings()).toEqual([booking])
   })
+
+  // Test that adding something that is not a Booking throws an error.
+  it('throws an error when adding something that is not a Booking', () => {
+    const calendar = new BookingCalendar()
+
+    expect(() => {
+      calendar.addBooking('not a booking')
+    }).toThrow('booking must be a Booking')
+  })
 })
