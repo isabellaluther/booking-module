@@ -46,6 +46,12 @@ export class BookingCalendar {
       throw new TypeError('booking must be a Booking')
     }
 
+    const bookingIdAlreadyExists = this.#bookings.some((existingBooking) => existingBooking.getId() === booking.getId())
+
+    if (bookingIdAlreadyExists) {
+      throw new Error('booking id already exists')
+    }
+
     this.#bookings.push(booking)
   }
 }
