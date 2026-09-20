@@ -187,4 +187,23 @@ describe('BookingCalendar', () => {
 
     expect(calendar.getBookingsForResource(resource)).toEqual([])
   })
+
+  // Test that getting bookings for a specific date works correctly.
+  it('returns bookings for a specific date', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+
+    const firstTimeSlot = new TimeSlot(new Date('2026-09-20T10:00:00'), new Date('2026-09-20T11:00:00'))
+
+    const secondTimeSlot = new TimeSlot(new Date('2026-09-21T10:00:00'), new Date('2026-09-21T11:00:00'))
+
+    const firstBooking = new Booking('booking-1', resource, firstTimeSlot)
+
+    const secondBooking = new Booking('booking-2', resource, secondTimeSlot)
+
+    calendar.addBooking(firstBooking)
+    calendar.addBooking(secondBooking)
+
+    expect(calendar.getBookingsForDate(new Date('2026-09-20'))).toEqual([firstBooking])
+  })
 })
