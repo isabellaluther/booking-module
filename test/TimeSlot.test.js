@@ -22,7 +22,7 @@ describe('TimeSlot', () => {
     const timeSlot = new TimeSlot(startTime, endTime)
 
     expect(timeSlot.getStartTime()).toEqual(startTime)
-    expect(timeSlot.getEndTime()).toBe(endTime)
+    expect(timeSlot.getEndTime()).toEqual(endTime)
   })
 
   // Test that an error is thrown when the start time is after the end time

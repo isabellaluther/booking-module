@@ -58,7 +58,7 @@ export class TimeSlot {
   /**
    * Gets the start time of the time slot.
    *
-   * @returns {Date} A new Date object representing the start time of the time slot. 
+   * @returns {Date} A new Date object representing the start time of the time slot.
    */
   getStartTime() {
     return new Date(this.#startTime.getTime())
@@ -67,10 +67,10 @@ export class TimeSlot {
   /**
    * Gets the end time of the time slot.
    *
-   * @returns {Date} The end time of the time slot.
+   * @returns {Date} A new Date object representing the end time of the time slot.
    */
   getEndTime() {
-    return this.#endTime
+    return new Date(this.#endTime.getTime())
   }
 
   /**
