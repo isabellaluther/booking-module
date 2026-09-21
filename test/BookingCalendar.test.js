@@ -606,4 +606,26 @@ describe('BookingCalendar', () => {
 
     expect(availableTimeSlots[3].getEndTime()).toEqual(new Date('2026-09-20T12:00:00'))
   })
+
+  // Test that a time slot overlapping a booking starting before the search interval is not returned.
+  it('does not return a time slot that overlaps a booking starting before the search interval', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+
+    const booking = new Booking(
+      'booking-1',
+      resource,
+      new TimeSlot(new Date('2026-09-20T08:30:00'), new Date('2026-09-20T09:30:00'))
+    )
+
+    calendar.addBooking(booking)
+
+    const searchTimeSlot = new TimeSlot(new Date('2026-09-20T09:00:00'), new Date('2026-09-20T11:00:00'))
+
+    const availableTimeSlots = calendar.getAvailableTimeSlots(resource, searchTimeSlot, 30)
+
+    expect(availableTimeSlots[0].getStartTime()).toEqual(new Date('2026-09-20T09:30:00'))
+
+    expect(availableTimeSlots[0].getEndTime()).toEqual(new Date('2026-09-20T10:00:00'))
+  })
 })
