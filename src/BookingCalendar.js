@@ -199,8 +199,13 @@ export class BookingCalendar {
    *
    * @param {Booking} booking - The booking to check for conflicts.
    * @returns {boolean} True if there is a conflict, false otherwise.
+   * @throws {TypeError} If the booking is not an instance of Booking.
    */
   hasBookingConflict(booking) {
+    if (!(booking instanceof Booking)) {
+      throw new TypeError('booking must be a Booking')
+    }
+
     return this.#bookings.some((existingBooking) => {
       const sameResource = existingBooking.getResource().getId() === booking.getResource().getId()
 
