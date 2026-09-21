@@ -187,9 +187,14 @@ export class BookingCalendar {
    * Cancels a booking by its id.
    *
    * @param {string} bookingId - The id of the booking to cancel.
+   * @throws {TypeError} If the bookingId is not a string.
    * @throws {Error} If the booking id does not exist.
    */
   cancelBooking(bookingId) {
+    if (typeof bookingId !== 'string') {
+      throw new TypeError('bookingId must be a string')
+    }
+
     const bookingIndex = this.#bookings.findIndex((booking) => booking.getId() === bookingId)
 
     if (bookingIndex === -1) {
