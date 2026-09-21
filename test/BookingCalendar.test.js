@@ -762,4 +762,13 @@ describe('BookingCalendar', () => {
 
     expect(calendar.getBookings()).toEqual([])
   })
+
+  // Test that the getBookingById method throws an error when the booking id is empty.
+  it('throws an error when booking lookup id is empty', () => {
+    const calendar = new BookingCalendar()
+
+    expect(() => {
+      calendar.getBookingById('   ')
+    }).toThrow('bookingId must not be empty')
+  })
 })
