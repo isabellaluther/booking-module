@@ -217,7 +217,9 @@ export class BookingCalendar {
       throw new TypeError('bookingId must be a string')
     }
 
-    const bookingIndex = this.#bookings.findIndex((booking) => booking.getId() === bookingId)
+    const trimmedBookingId = bookingId.trim()
+
+    const bookingIndex = this.#bookings.findIndex((booking) => booking.getId() === trimmedBookingId)
 
     if (bookingIndex === -1) {
       throw new Error('booking id does not exist')
