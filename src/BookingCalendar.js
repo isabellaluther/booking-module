@@ -100,11 +100,11 @@ export class BookingCalendar {
    *
    * @param {Resource} resource - The resource to check availability for.
    * @param {TimeSlot} searchTimeSlot - The time slot to search within.
-   * @param {number} durationInMinutes - The duration of the desired time slot in minutes.
+   * @param {number} durationInMinutes - The duration of the desired time slot in whole minutes.
    * @returns {Array<TimeSlot>} The available time slots for the specified resource and time slot.
    * @throws {TypeError} If the resource is not an instance of Resource.
    * @throws {TypeError} If the search time slot is not an instance of TimeSlot.
-   * @throws {TypeError} If the duration is not a number.
+   * @throws {TypeError} If the duration is not a valid integer.
    * @throws {Error} If the duration is zero or negative.
    */
   getAvailableTimeSlots(resource, searchTimeSlot, durationInMinutes) {
