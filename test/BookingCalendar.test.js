@@ -462,4 +462,13 @@ describe('BookingCalendar', () => {
       calendar.hasBookingConflict('invalid')
     }).toThrow('booking must be a Booking')
   })
+
+  // Test that an error is thrown when booking id is not a string.
+  it('throws an error when booking id is not a string', () => {
+    const calendar = new BookingCalendar()
+
+    expect(() => {
+      calendar.getBookingById(123)
+    }).toThrow('bookingId must be a string')
+  })
 })
