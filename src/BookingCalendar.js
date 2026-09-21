@@ -84,14 +84,15 @@ export class BookingCalendar {
       throw new TypeError('date must be a valid Date')
     }
 
-    return this.#bookings.filter((booking) => {
-      const bookingDate = booking.getTimeSlot().getStartTime()
+    const startOfDate = new Date(date.getFullYear(), date.getMonth(), date.getDate())
 
-      return (
-        bookingDate.getFullYear() === date.getFullYear() &&
-        bookingDate.getMonth() === date.getMonth() &&
-        bookingDate.getDate() === date.getDate()
-      )
+    const startOfNextDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1)
+
+    return this.#bookings.filter((booking) => {
+      const bookingStartTime = booking.getTimeSlot().getStartTime()
+      const bookingEndTime = booking.getTimeSlot().getEndTime()
+
+      return bookingStartTime < startOfNextDate && bookingEndTime > startOfDate
     })
   }
 
