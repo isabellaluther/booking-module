@@ -51,6 +51,10 @@ export class BookingCalendar {
 
     const trimmedBookingId = bookingId.trim()
 
+    if (trimmedBookingId === '') {
+      throw new Error('bookingId must not be empty')
+    }
+
     return this.#bookings.find((booking) => booking.getId() === trimmedBookingId)
   }
   /**
