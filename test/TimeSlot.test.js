@@ -165,4 +165,15 @@ describe('TimeSlot', () => {
       timeSlot.overlaps('not a time slot')
     }).toThrow('otherTimeSlot must be a TimeSlot')
   })
+
+  // Test that the end time cannot be changed through the getter
+  it('does not allow the start time to be changed through the getter', () => {
+    const timeSlot = new TimeSlot(new Date('2026-09-20T09:00:00'), new Date('2026-09-20T10:00:00'))
+
+    const returnedStartTime = timeSlot.getStartTime()
+
+    returnedStartTime.setHours(12)
+
+    expect(timeSlot.getStartTime()).toEqual(new Date('2026-09-20T09:00:00'))
+  })
 })
