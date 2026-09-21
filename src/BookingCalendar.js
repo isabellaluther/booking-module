@@ -43,6 +43,7 @@ export class BookingCalendar {
    * @param {string} bookingId - The id of the booking to retrieve.
    * @returns {Booking|undefined} The booking with the given id, or undefined if not found.
    * @throws {TypeError} If the bookingId is not a string.
+   * @throws {Error} If the bookingId is empty.
    */
   getBookingById(bookingId) {
     if (typeof bookingId !== 'string') {
@@ -215,6 +216,7 @@ export class BookingCalendar {
    * @param {string} bookingId - The id of the booking to cancel.
    * @throws {TypeError} If the bookingId is not a string.
    * @throws {Error} If the booking id does not exist.
+   * @throws {Error} If the bookingId is empty.
    */
   cancelBooking(bookingId) {
     if (typeof bookingId !== 'string') {
