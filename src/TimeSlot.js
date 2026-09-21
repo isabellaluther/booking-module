@@ -58,10 +58,10 @@ export class TimeSlot {
   /**
    * Gets the start time of the time slot.
    *
-   * @returns {Date} The start time of the time slot.
+   * @returns {Date} A new Date object representing the start time of the time slot. 
    */
   getStartTime() {
-    return this.#startTime
+    return new Date(this.#startTime.getTime())
   }
 
   /**
