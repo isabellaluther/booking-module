@@ -672,4 +672,22 @@ describe('BookingCalendar', () => {
 
     expect(availableTimeSlots).toEqual([])
   })
+
+  // Test that a booking continuing into the requested date is returned.
+  it('returns a booking that continues into the requested date', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+
+    const booking = new Booking(
+      'booking-1',
+      resource,
+      new TimeSlot(new Date('2026-09-21T23:30:00'), new Date('2026-09-22T00:30:00'))
+    )
+
+    calendar.addBooking(booking)
+
+    const bookingsForDate = calendar.getBookingsForDate(new Date('2026-09-22T12:00:00'))
+
+    expect(bookingsForDate).toContain(booking)
+  })
 })
