@@ -21,7 +21,7 @@ describe('TimeSlot', () => {
 
     const timeSlot = new TimeSlot(startTime, endTime)
 
-    expect(timeSlot.getStartTime()).toBe(startTime)
+    expect(timeSlot.getStartTime()).toEqual(startTime)
     expect(timeSlot.getEndTime()).toBe(endTime)
   })
 
@@ -166,7 +166,7 @@ describe('TimeSlot', () => {
     }).toThrow('otherTimeSlot must be a TimeSlot')
   })
 
-  // Test that the end time cannot be changed through the getter
+  // Test that the start time cannot be changed through the getter
   it('does not allow the start time to be changed through the getter', () => {
     const timeSlot = new TimeSlot(new Date('2026-09-20T09:00:00'), new Date('2026-09-20T10:00:00'))
 
