@@ -45,7 +45,7 @@ export class Resource {
     }
 
     this.#id = id.trim()
-    this.#name = name
+    this.#name = name.trim()
   }
 
   /**
