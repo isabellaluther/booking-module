@@ -771,4 +771,13 @@ describe('BookingCalendar', () => {
       calendar.getBookingById('   ')
     }).toThrow('bookingId must not be empty')
   })
+
+  // Test that the cancelBooking method throws an error when the booking id is empty.
+  it('throws an error when cancellation id is empty', () => {
+    const calendar = new BookingCalendar()
+
+    expect(() => {
+      calendar.cancelBooking('   ')
+    }).toThrow('bookingId must not be empty')
+  })
 })
