@@ -42,8 +42,13 @@ export class BookingCalendar {
    *
    * @param {string} bookingId - The id of the booking to retrieve.
    * @returns {Booking|undefined} The booking with the given id, or undefined if not found.
+   * @throws {TypeError} If the bookingId is not a string.
    */
   getBookingById(bookingId) {
+    if (typeof bookingId !== 'string') {
+      throw new TypeError('bookingId must be a string')
+    }
+
     return this.#bookings.find((booking) => booking.getId() === bookingId)
   }
 
