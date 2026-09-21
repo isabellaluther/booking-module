@@ -187,4 +187,16 @@ describe('TimeSlot', () => {
 
     expect(timeSlot.getEndTime()).toEqual(new Date('2026-09-20T10:00:00'))
   })
+
+  // Test that modifying the original start time does not affect the time slot
+  it('does not allow the original start time to change the time slot', () => {
+    const startTime = new Date('2026-09-20T09:00:00')
+    const endTime = new Date('2026-09-20T10:00:00')
+
+    const timeSlot = new TimeSlot(startTime, endTime)
+
+    startTime.setHours(12)
+
+    expect(timeSlot.getStartTime()).toEqual(new Date('2026-09-20T09:00:00'))
+  })
 })
