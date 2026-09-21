@@ -39,6 +39,7 @@ export class BookingCalendar {
 
   /**
    * Gets a booking by its id.
+   * Trims whitespace from the booking id before looking it up.
    *
    * @param {string} bookingId - The id of the booking to retrieve.
    * @returns {Booking|undefined} The booking with the given id, or undefined if not found.
@@ -212,6 +213,7 @@ export class BookingCalendar {
 
   /**
    * Cancels a booking by its id.
+   * Trims whitespace from the booking id before cancelling.
    *
    * @param {string} bookingId - The id of the booking to cancel.
    * @throws {TypeError} If the bookingId is not a string.
