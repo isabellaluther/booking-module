@@ -176,4 +176,15 @@ describe('TimeSlot', () => {
 
     expect(timeSlot.getStartTime()).toEqual(new Date('2026-09-20T09:00:00'))
   })
+
+  // Test that the end time cannot be changed through the getter
+  it('does not allow the end time to be changed through the getter', () => {
+    const timeSlot = new TimeSlot(new Date('2026-09-20T09:00:00'), new Date('2026-09-20T10:00:00'))
+
+    const returnedEndTime = timeSlot.getEndTime()
+
+    returnedEndTime.setHours(12)
+
+    expect(timeSlot.getEndTime()).toEqual(new Date('2026-09-20T10:00:00'))
+  })
 })
