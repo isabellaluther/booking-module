@@ -471,4 +471,13 @@ describe('BookingCalendar', () => {
       calendar.getBookingById(123)
     }).toThrow('bookingId must be a string')
   })
+
+  // Test that an error is thrown when cancelling with a non-string booking id.
+  it('throws an error when cancelling with a non-string booking id', () => {
+    const calendar = new BookingCalendar()
+
+    expect(() => {
+      calendar.cancelBooking(123)
+    }).toThrow('bookingId must be a string')
+  })
 })
