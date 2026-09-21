@@ -49,9 +49,10 @@ export class BookingCalendar {
       throw new TypeError('bookingId must be a string')
     }
 
-    return this.#bookings.find((booking) => booking.getId() === bookingId)
-  }
+    const trimmedBookingId = bookingId.trim()
 
+    return this.#bookings.find((booking) => booking.getId() === trimmedBookingId)
+  }
   /**
    * Gets all bookings for a specific resource.
    *
