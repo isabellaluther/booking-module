@@ -708,4 +708,22 @@ describe('BookingCalendar', () => {
 
     expect(bookingsForDate).toEqual([])
   })
+
+  // Test that a booking starting exactly at the start of the requested date is included.
+  it('returns a booking that starts exactly when the requested date starts', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+
+    const booking = new Booking(
+      'booking-1',
+      resource,
+      new TimeSlot(new Date('2026-09-22T00:00:00'), new Date('2026-09-22T01:00:00'))
+    )
+
+    calendar.addBooking(booking)
+
+    const bookingsForDate = calendar.getBookingsForDate(new Date('2026-09-22T12:00:00'))
+
+    expect(bookingsForDate).toContain(booking)
+  })
 })
