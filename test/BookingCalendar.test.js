@@ -780,4 +780,24 @@ describe('BookingCalendar', () => {
       calendar.cancelBooking('   ')
     }).toThrow('bookingId must not be empty')
   })
+
+  // Test that getBookingsForResource returns bookings for another resource instance with the same id.
+  it('returns bookings for another resource instance with the same id', () => {
+    const calendar = new BookingCalendar()
+
+    const firstResource = new Resource('room-101', 'Study Room 101')
+    const secondResource = new Resource('room-101', 'Different Name')
+
+    const booking = new Booking(
+      'booking-1',
+      firstResource,
+      new TimeSlot(new Date('2026-09-20T09:00:00'), new Date('2026-09-20T10:00:00'))
+    )
+
+    calendar.addBooking(booking)
+
+    const bookings = calendar.getBookingsForResource(secondResource)
+
+    expect(bookings).toEqual([booking])
+  })
 })
