@@ -744,4 +744,22 @@ describe('BookingCalendar', () => {
 
     expect(foundBooking).toBe(booking)
   })
+
+  // Test that the cancelBooking method trims whitespace from the booking id.
+  it('trims whitespace when cancelling a booking by id', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+
+    const booking = new Booking(
+      'booking-1',
+      resource,
+      new TimeSlot(new Date('2026-09-20T09:00:00'), new Date('2026-09-20T10:00:00'))
+    )
+
+    calendar.addBooking(booking)
+
+    calendar.cancelBooking(' booking-1 ')
+
+    expect(calendar.getBookings()).toEqual([])
+  })
 })
