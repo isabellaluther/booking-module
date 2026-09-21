@@ -51,8 +51,8 @@ export class TimeSlot {
       throw new Error('startTime must be before endTime')
     }
 
-    this.#startTime = startTime
-    this.#endTime = endTime
+    this.#startTime = new Date(startTime.getTime())
+    this.#endTime = new Date(endTime.getTime())
   }
 
   /**
