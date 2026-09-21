@@ -65,4 +65,15 @@ describe('Booking', () => {
       new Booking('booking-1', resource, 'not a time slot')
     }).toThrow()
   })
+
+  // Test that the Booking class trims whitespace from the booking id.
+  it('trims whitespace from the booking id', () => {
+    const resource = new Resource('room-101', 'Study Room 101')
+
+    const timeSlot = new TimeSlot(new Date('2026-09-20T09:00:00'), new Date('2026-09-20T10:00:00'))
+
+    const booking = new Booking(' booking-1 ', resource, timeSlot)
+
+    expect(booking.getId()).toBe('booking-1')
+  })
 })
