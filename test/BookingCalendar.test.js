@@ -563,4 +563,47 @@ describe('BookingCalendar', () => {
 
     expect(availableTimeSlots[2].getEndTime()).toEqual(new Date('2026-09-20T11:00:00'))
   })
+
+  // Test that available time slots are returned correctly between multiple bookings.
+  it('returns available time slots between multiple bookings', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+
+    const firstBooking = new Booking(
+      'booking-1',
+      resource,
+      new TimeSlot(new Date('2026-09-20T09:30:00'), new Date('2026-09-20T10:00:00'))
+    )
+
+    const secondBooking = new Booking(
+      'booking-2',
+      resource,
+      new TimeSlot(new Date('2026-09-20T11:00:00'), new Date('2026-09-20T11:30:00'))
+    )
+
+    calendar.addBooking(firstBooking)
+    calendar.addBooking(secondBooking)
+
+    const searchTimeSlot = new TimeSlot(new Date('2026-09-20T09:00:00'), new Date('2026-09-20T12:00:00'))
+
+    const availableTimeSlots = calendar.getAvailableTimeSlots(resource, searchTimeSlot, 30)
+
+    expect(availableTimeSlots.length).toBe(4)
+
+    expect(availableTimeSlots[0].getStartTime()).toEqual(new Date('2026-09-20T09:00:00'))
+
+    expect(availableTimeSlots[0].getEndTime()).toEqual(new Date('2026-09-20T09:30:00'))
+
+    expect(availableTimeSlots[1].getStartTime()).toEqual(new Date('2026-09-20T10:00:00'))
+
+    expect(availableTimeSlots[1].getEndTime()).toEqual(new Date('2026-09-20T10:30:00'))
+
+    expect(availableTimeSlots[2].getStartTime()).toEqual(new Date('2026-09-20T10:30:00'))
+
+    expect(availableTimeSlots[2].getEndTime()).toEqual(new Date('2026-09-20T11:00:00'))
+
+    expect(availableTimeSlots[3].getStartTime()).toEqual(new Date('2026-09-20T11:30:00'))
+
+    expect(availableTimeSlots[3].getEndTime()).toEqual(new Date('2026-09-20T12:00:00'))
+  })
 })
