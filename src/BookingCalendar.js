@@ -133,23 +133,43 @@ export class BookingCalendar {
     }
 
     const availableTimeSlots = []
+
+    // Get all bookings for the resource that overlap with the search time slot and sort them by start time.
     const resourceBookings = this.getBookingsForResource(resource)
+      .filter((booking) => booking.getTimeSlot().overlaps(searchTimeSlot))
+      .sort(
+        (firstBooking, secondBooking) =>
+          firstBooking.getTimeSlot().getStartTime() - secondBooking.getTimeSlot().getStartTime()
+      )
 
     let currentStartTime = searchTimeSlot.getStartTime()
     const searchEndTime = searchTimeSlot.getEndTime()
+    const durationInMilliseconds = durationInMinutes * 60 * 1000
 
-    while (currentStartTime < searchEndTime) {
-      const currentEndTime = new Date(currentStartTime.getTime() + durationInMinutes * 60 * 1000)
+    // Iterate through each booking to find available time slots between bookings.
+    for (const booking of resourceBookings) {
+      const bookingStartTime = booking.getTimeSlot().getStartTime()
+      const bookingEndTime = booking.getTimeSlot().getEndTime()
 
-      if (currentEndTime <= searchEndTime) {
-        const currentTimeSlot = new TimeSlot(currentStartTime, currentEndTime)
+      // Check for available time slots before the current booking.
+      while (currentStartTime.getTime() + durationInMilliseconds <= bookingStartTime.getTime()) {
+        const currentEndTime = new Date(currentStartTime.getTime() + durationInMilliseconds)
 
-        const hasConflict = resourceBookings.some((booking) => booking.getTimeSlot().overlaps(currentTimeSlot))
+        availableTimeSlots.push(new TimeSlot(currentStartTime, currentEndTime))
 
-        if (!hasConflict) {
-          availableTimeSlots.push(currentTimeSlot)
-        }
+        currentStartTime = currentEndTime
       }
+
+      if (bookingEndTime > currentStartTime) {
+        currentStartTime = bookingEndTime
+      }
+    }
+
+    // Add any remaining available time slots after the last booking.
+    while (currentStartTime.getTime() + durationInMilliseconds <= searchEndTime.getTime()) {
+      const currentEndTime = new Date(currentStartTime.getTime() + durationInMilliseconds)
+
+      availableTimeSlots.push(new TimeSlot(currentStartTime, currentEndTime))
 
       currentStartTime = currentEndTime
     }
