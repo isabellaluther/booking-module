@@ -652,4 +652,24 @@ describe('BookingCalendar', () => {
 
     expect(availableTimeSlots[2].getEndTime()).toEqual(new Date('2026-09-20T10:30:00'))
   })
+
+  // Test that no available time slots are returned when a booking covers the whole search interval.
+  it('returns no available time slots when a booking covers the whole search interval', () => {
+    const calendar = new BookingCalendar()
+    const resource = new Resource('room-101', 'Study Room 101')
+
+    const booking = new Booking(
+      'booking-1',
+      resource,
+      new TimeSlot(new Date('2026-09-20T08:00:00'), new Date('2026-09-20T12:00:00'))
+    )
+
+    calendar.addBooking(booking)
+
+    const searchTimeSlot = new TimeSlot(new Date('2026-09-20T09:00:00'), new Date('2026-09-20T11:00:00'))
+
+    const availableTimeSlots = calendar.getAvailableTimeSlots(resource, searchTimeSlot, 30)
+
+    expect(availableTimeSlots).toEqual([])
+  })
 })
