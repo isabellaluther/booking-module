@@ -56,4 +56,11 @@ describe('Resource', () => {
 
     expect(resource.getId()).toBe('room-101')
   })
+
+  // Test that the constructor trims whitespace from the resource name.
+  it('trims whitespace from the resource name', () => {
+    const resource = new Resource('room-101', ' Study Room 101 ')
+
+    expect(resource.getName()).toBe('Study Room 101')
+  })
 })
