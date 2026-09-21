@@ -55,7 +55,7 @@ export class Booking {
       throw new TypeError('timeSlot must be a TimeSlot')
     }
 
-    this.#id = id
+    this.#id = id.trim()
     this.#resource = resource
     this.#timeSlot = timeSlot
   }
