@@ -44,7 +44,7 @@ export class Resource {
       throw new Error('name must not be empty')
     }
 
-    this.#id = id
+    this.#id = id.trim()
     this.#name = name
   }
 
