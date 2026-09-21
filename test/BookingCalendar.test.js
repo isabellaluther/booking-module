@@ -453,4 +453,13 @@ describe('BookingCalendar', () => {
       calendar.getAvailableTimeSlots(resource, searchTimeSlot, 30.5)
     }).toThrow('durationInMinutes must be an integer')
   })
+
+  // Test that an error is thrown when checking conflict with an invalid booking.
+  it('throws an error when checking conflict with an invalid booking', () => {
+    const calendar = new BookingCalendar()
+
+    expect(() => {
+      calendar.hasBookingConflict('invalid')
+    }).toThrow('booking must be a Booking')
+  })
 })
