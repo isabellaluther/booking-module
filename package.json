@@ -9,6 +9,7 @@
   },
   "scripts": {
     "test": "vitest run",
+    "test:run": "vitest run",
     "test:match": "vitest run -t",
     "lint": "eslint ./src ./test --cache",
     "lint:fix": "eslint ./src ./test --cache --fix",
