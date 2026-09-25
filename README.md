@@ -1,173 +1,256 @@
-# JavaScript CLI Template
+# Booking Module
 
-Welcome to the **1dv610** JavaScript Command-Line Interface (CLI) template. This repository serves as a clean, pre-configured boilerplate for building robust Node.js console applications with modern tools and best practices.
+## About
 
-## 🚀 Features
+Booking Module is a reusable JavaScript module for managing bookable resources, time slots, and bookings.
 
-- **Modern ECMAScript Modules (ESM):** Full native support for `import`/`export` syntax.
-- **Unit Testing:** Pre-configured with [Vitest](https://vitest.dev) for blazing-fast test execution.
-- **Linting & Code Quality:** Strict code analysis using [ESLint](https://eslint.org) integrated with custom `@lnu/eslint-config` rules.
-- **Code Formatting:** Automatic code style management via [Prettier](https://prettier.io).
+The module is designed to be used by other applications that need booking functionality without depending on a specific user interface, database, or application type.
 
----
+It provides functionality for creating resources and bookings, checking booking conflicts, retrieving bookings by resource or date, cancelling bookings, and calculating available time slots.
 
-## 🛠️ Getting Started
+## Features
 
-### Prerequisites
+- Create bookable resources.
+- Create time slots with start and end times.
+- Create bookings that connect a resource with a time slot.
+- Prevent conflicting bookings for the same resource.
+- Allow overlapping bookings for different resources.
+- Retrieve bookings by id, resource, or date.
+- Cancel bookings by id.
+- Calculate available time slots for a resource.
+- Support different booking durations in whole minutes.
+- Validate input values and reject invalid input.
+- Protect internal date values from external modification.
 
-Ensure you have **Node.js** (version 24.12.0 or later) and **Git** installed on your machine.
+## Installation
 
-### Installation & Project Setup
-
-Pick the flow that matches your situation.
-
-#### A. Starting from scratch (no repository yet) — recommended
-
-Use GitHub's built-in template flow — no git commands needed to get a clean, single-commit history:
-
-1. On GitHub, open this template repository and click **Use this template → Create a new repository**.
-2. Clone your new repository and move into it:
-
-   ```bash
-   git clone <your-newly-created-repository-url>
-   cd <your-repository-name>
-   ```
-
-3. Install dependencies:
-
-   ```bash
-   npm install
-   ```
-
-GitHub gives your new repository its own single commit copied from this template — no shared history, nothing to merge or squash.
-
-> **Note:** This requires the template repository to have **Template repository** enabled under its GitHub Settings → General. If the "Use this template" button isn't available, use flow B instead.
-
-#### B. Importing into an existing repository (empty or not)
-
-Use this flow if you already have a repository — e.g. one provisioned by GitHub Classroom — that you can't or don't want to recreate from a template.
-
-1. Clone your existing repository and move into it:
-
-   ```bash
-   git clone <your-existing-repository-url>
-   cd <your-repository-name>
-   ```
-
-2. If the repository has no commits yet, create an empty initial commit:
-
-   ```bash
-   git commit --allow-empty -m "Initial commit"
-   ```
-
-   _Note: This step is required for a genuinely empty repository. A branch with zero commits has nothing for `--squash` to diff against, so `git pull --squash` silently falls back to a plain fast-forward — it imports this template's entire internal commit history unmodified instead of collapsing it into one clean commit. An empty commit gives `--squash` a (empty) tree to compare against, so it behaves as intended. Skip this step if the repository already has commits (e.g. an auto-generated README)._
-
-3. **Pull and squash the boilerplate code** from this template repository into your branch:
-
-   ```bash
-   git pull git@github.com:1dv610/js-cli-template.git main --squash --allow-unrelated-histories
-   ```
-
-   _Note: Using `--squash` ensures that the boilerplate's internal development history is collapsed into a single, clean starting point in your repository. If your repository already had files (e.g. GitHub auto-created a README or `.gitignore`), this will report a conflict on those files — resolve it by taking the template's version: `git checkout --theirs <file> && git add <file>`._
-
-4. **Commit the imported files** to finalize the import of the boilerplate:
-
-   ```bash
-   git commit -m "Initial commit from boilerplate"
-   ```
-
-5. **Install the project dependencies:**
-
-   ```bash
-   npm install
-   ```
-
-6. **Push the clean boilerplate setup** up to your own GitHub repository:
-   ```bash
-   git push origin main
-   ```
-
----
-
-## 💻 Available Scripts
-
-You can manage the application lifecycle, testing, and formatting using the following npm scripts:
-
-### Running the Application
-
-Starts the main console application entry point (`src/app.js`), optionally passing a name as the first argument:
+Clone the repository:
 
 ```bash
-npm start
-npm start -- "Ada Lovelace"
+git clone git@github.com:isabellaluther/booking-module.git
 ```
 
-The `bin` entry in `package.json` also makes the app runnable as a standalone command once linked (`npm link`) or installed:
+Move into the project directory:
 
 ```bash
-js-cli-template "Ada Lovelace"
+cd booking-module
 ```
 
-_Note: Rename the `js-cli-template` key in `package.json`'s `bin` field (and the `name` field) to match your own project when adapting this template._
+Install the development dependencies:
 
-### Running Tests
+```bash
+npm install
+```
 
-- **Interactive Watch Mode (Recommended for development):**
-  ```bash
-  npm test
-  ```
-- **Single Execution Run:**
-  ```bash
-  npm run test:run
-  ```
-- **Run Specific Tests (by matching name patterns):**
-  ```bash
-  npm run test:match -- <test-name-pattern>
-  ```
+## Usage
 
-### Code Linting
+The public classes are exported from `src/index.js`.
 
-Analyze the source code in `src/` for errors, syntax issues, and anti-patterns:
+Example:
+
+```js
+import {
+  Booking,
+  BookingCalendar,
+  Resource,
+  TimeSlot
+} from './src/index.js'
+
+const resource = new Resource(
+  'room-101',
+  'Study Room 101'
+)
+
+const timeSlot = new TimeSlot(
+  new Date('2026-09-20T10:00:00'),
+  new Date('2026-09-20T11:00:00')
+)
+
+const booking = new Booking(
+  'booking-1',
+  resource,
+  timeSlot
+)
+
+const calendar = new BookingCalendar()
+
+calendar.addBooking(booking)
+
+console.log(calendar.getBookings())
+```
+
+## API
+
+### Resource
+
+Represents something that can be booked.
+
+```js
+new Resource(id, name)
+```
+
+Public methods:
+
+- `getId()` - Returns the resource id.
+- `getName()` - Returns the resource name.
+
+The id and name must be non-empty strings. Leading and trailing whitespace is removed.
+
+### TimeSlot
+
+Represents a period between a start time and an end time.
+
+```js
+new TimeSlot(startTime, endTime)
+```
+
+Public methods:
+
+- `getStartTime()` - Returns the start time.
+- `getEndTime()` - Returns the end time.
+- `getDurationInMinutes()` - Returns the duration in minutes.
+- `overlaps(otherTimeSlot)` - Returns whether two time slots overlap.
+
+Both values must be valid `Date` objects, and the start time must be before the end time.
+
+### Booking
+
+Represents a booking of a resource during a time slot.
+
+```js
+new Booking(id, resource, timeSlot)
+```
+
+Public methods:
+
+- `getId()` - Returns the booking id.
+- `getResource()` - Returns the booked resource.
+- `getTimeSlot()` - Returns the booking time slot.
+
+The booking id must be a non-empty string. Leading and trailing whitespace is removed.
+
+The resource must be a `Resource`, and the time slot must be a `TimeSlot`.
+
+### BookingCalendar
+
+Manages bookings and booking availability.
+
+```js
+new BookingCalendar()
+```
+
+Public methods:
+
+- `getBookings()` - Returns all bookings.
+- `getBookingById(bookingId)` - Returns a booking with the specified id, or `undefined` if no booking is found.
+- `getBookingsForResource(resource)` - Returns bookings for a resource.
+- `getBookingsForDate(date)` - Returns bookings that affect a specific date.
+- `getAvailableTimeSlots(resource, searchTimeSlot, durationInMinutes)` - Returns available time slots for a resource.
+- `addBooking(booking)` - Adds a booking.
+- `cancelBooking(bookingId)` - Removes a booking.
+- `hasBookingConflict(booking)` - Checks whether a booking conflicts with an existing booking.
+
+Leading and trailing whitespace in booking ids is ignored when looking up or cancelling a booking.
+
+## Availability
+
+`getAvailableTimeSlots()` searches for available booking periods within a specified `TimeSlot`.
+
+The requested duration must be a positive whole number of minutes.
+
+Example:
+
+```js
+const searchTimeSlot = new TimeSlot(
+  new Date('2026-09-20T09:00:00'),
+  new Date('2026-09-20T12:00:00')
+)
+
+const availableTimeSlots =
+  calendar.getAvailableTimeSlots(
+    resource,
+    searchTimeSlot,
+    30
+  )
+```
+
+Available slots are calculated from the actual free periods between bookings.
+
+For example, if an existing booking ends at `10:30`, an available slot may begin at `10:30` if the requested duration fits before the next booking or before the search interval ends.
+
+## Requirements
+
+- Node.js 24.12.0 or later
+- ECMAScript Modules (ESM)
+
+Development tools include:
+
+- Vitest
+- ESLint
+- Prettier
+- `@lnu/eslint-config`
+
+The complete list of development dependencies is available in `package.json`.
+
+## Testing
+
+The module is tested using automated unit tests with Vitest.
+
+Run all tests with:
+
+```bash
+npm run test
+```
+
+Run the linter with:
 
 ```bash
 npm run lint
 ```
 
-Automatically fix fixable linting issues:
-
-```bash
-npm run lint:fix
-```
-
-### Formatting
-
-Check if files comply with Prettier styling rules:
-
-```bash
-npm run format:check
-```
-
-Automatically reformat all source files:
+Format the source and test files with:
 
 ```bash
 npm run format
 ```
 
----
+The full test documentation is available in `TEST_REPORT.md`.
 
-## 📁 Project Structure
+## Project Structure
 
 ```text
+booking-module/
 ├── src/
-│   ├── app.js       # Main application logic & execution entry point
-│   └── app.test.js  # Unit tests for closely coupled application logic
-├── test/            # Integration and system tests (higher-level / E2E test flows)
-├── package.json     # Project configuration, scripts, and dependencies
-└── LICENSE          # Unlicense (Public Domain dedication)
+│   ├── Booking.js
+│   ├── BookingCalendar.js
+│   ├── index.js
+│   ├── Resource.js
+│   └── TimeSlot.js
+├── test/
+│   ├── Booking.test.js
+│   ├── BookingCalendar.test.js
+│   ├── Resource.test.js
+│   └── TimeSlot.test.js
+├── TEST_REPORT.md
+├── README.md
+├── package.json
+└── LICENSE
 ```
 
----
+## Scope
 
-## ⚖️ License
+The module handles the core booking logic.
 
-This project is released into the public domain under the **Unlicense**. You are free to copy, modify, publish, and distribute this boilerplate code in any way you see fit without any restrictions.
+It does not provide:
+
+- a graphical user interface
+- database storage
+- user authentication
+- network or API functionality
+- persistence between program executions
+
+These concerns can be implemented by an application that uses the module.
+
+## License
+
+This project is released under the Unlicense.
