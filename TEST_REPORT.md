@@ -84,6 +84,7 @@ The tests are located in the `test` directory and cover the public functionality
 | `TimeSlot.overlaps()` returns `false` when the first time slot starts exactly when the second ends. | Automated unit test (Vitest): compared 11:00–12:00 with 10:00–11:00 and checked that `overlaps()` returned `false`. | ✅ Passed. |
 | `TimeSlot.overlaps()` returns `false` when the time slots are completely separate. | Automated unit test (Vitest): compared two non-overlapping time slots and checked that `overlaps()` returned `false`. | ✅ Passed. |
 | `TimeSlot.overlaps()` rejects an argument that is not a `TimeSlot`. | Automated unit test (Vitest): passed a string to `overlaps()` and checked that the expected error was thrown. | ✅ Passed. |
+| `TimeSlot.overlaps()` returns `true` when two time slots overlap. | Automated unit test (Vitest): compared time slots 10:00–11:00 and 10:30–11:30 and checked that `overlaps()` returned `true`. | ✅ Passed. |
 
 #### Validation
 
