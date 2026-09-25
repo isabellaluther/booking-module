@@ -183,14 +183,14 @@ For example, if an existing booking ends at `10:30`, an available slot may begin
 - Node.js 24.12.0 or later
 - ECMAScript Modules (ESM)
 
-The module does not require any runtime dependencies.
-
 Development tools include:
 
 - Vitest
 - ESLint
 - Prettier
 - `@lnu/eslint-config`
+
+The complete list of development dependencies is available in `package.json`.
 
 ## Testing
 
