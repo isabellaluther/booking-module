@@ -10,7 +10,7 @@
 import { Booking } from './Booking.js'
 import { Resource } from './Resource.js'
 import { TimeSlot } from './TimeSlot.js'
-import { validateString, validateNonEmptyString, validateDate, validateValidDate } from './utils/validation.js'
+import { validateString, validateNonEmptyString, validateDate, validateValidDate, validateInstance } from './utils/validation.js'
 
 /**
  * Manages bookings in a booking calendar.
@@ -111,13 +111,8 @@ export class BookingCalendar {
    * @throws {Error} If the duration is zero or negative.
    */
   getAvailableTimeSlots(resource, searchTimeSlot, durationInMinutes) {
-    if (!(resource instanceof Resource)) {
-      throw new TypeError('resource must be a Resource')
-    }
-
-    if (!(searchTimeSlot instanceof TimeSlot)) {
-      throw new TypeError('searchTimeSlot must be a TimeSlot')
-    }
+    validateInstance(resource, Resource, 'resource')
+    validateInstance(searchTimeSlot, TimeSlot, 'searchTimeSlot')
 
     if (typeof durationInMinutes !== 'number') {
       throw new TypeError('durationInMinutes must be a number')

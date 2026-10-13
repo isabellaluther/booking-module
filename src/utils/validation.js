@@ -60,3 +60,17 @@ export function validateValidDate(value, name) {
     throw new TypeError(`${name} must be a valid Date`)
   }
 }
+
+/**
+ * Validates that a value is an instance of a specified class.
+ *
+ * @param {*} value - The value to validate.
+ * @param {new(...args: any[]) => object} expectedClass - The expected class.
+ * @param {string} name - The name of the argument.
+ * @throws {TypeError} If the value is not an instance of the expected class.
+ */
+export function validateInstance(value, expectedClass, name) {
+  if (!(value instanceof expectedClass)) {
+    throw new TypeError(`${name} must be a ${expectedClass.name}`)
+  }
+}
