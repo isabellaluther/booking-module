@@ -67,9 +67,7 @@ export class BookingCalendar {
    * @throws {TypeError} If the resource is not an instance of Resource.
    */
   getBookingsForResource(resource) {
-    if (!(resource instanceof Resource)) {
-      throw new TypeError('resource must be a Resource')
-    }
+    validateInstance(resource, Resource, 'resource')
 
     return this.#bookings.filter((booking) => booking.getResource().getId() === resource.getId())
   }
