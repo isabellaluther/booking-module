@@ -216,15 +216,10 @@ export class BookingCalendar {
    * @throws {Error} If the bookingId is empty.
    */
   cancelBooking(bookingId) {
-    if (typeof bookingId !== 'string') {
-      throw new TypeError('bookingId must be a string')
-    }
+    validateString(bookingId, 'bookingId')
+    validateNonEmptyString(bookingId, 'bookingId')
 
     const trimmedBookingId = bookingId.trim()
-
-    if (trimmedBookingId === '') {
-      throw new Error('bookingId must not be empty')
-    }
 
     const bookingIndex = this.#bookings.findIndex((booking) => booking.getId() === trimmedBookingId)
 
