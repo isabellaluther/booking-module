@@ -30,15 +30,15 @@ export class Resource {
    * @param {string} name - The name of the resource.
    */
   constructor(id, name) {
-  validateString(id, 'id')
-  validateString(name, 'name')
+    validateString(id, 'id')
+    validateString(name, 'name')
 
-  validateNonEmptyString(id, 'id')
-  validateNonEmptyString(name, 'name')
+    validateNonEmptyString(id, 'id')
+    validateNonEmptyString(name, 'name')
 
-  this.#id = id.trim()
-  this.#name = name.trim()
-}
+    this.#id = id.trim()
+    this.#name = name.trim()
+  }
 
   /**
    * Gets the unique identifier of the resource.

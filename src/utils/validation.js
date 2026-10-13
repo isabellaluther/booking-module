@@ -33,3 +33,30 @@ export function validateNonEmptyString(value, name) {
     throw new Error(`${name} must not be empty`)
   }
 }
+
+/**
+ * Validates that a value is a Date object.
+ *
+ * @param {*} value - The value to validate.
+ * @param {string} name - The name of the argument.
+ * @throws {TypeError} If the value is not a Date.
+ */
+export function validateDate(value, name) {
+  if (!(value instanceof Date)) {
+    throw new TypeError(`${name} must be a Date`)
+  }
+}
+
+/**
+ * Validates that a Date object contains a valid date.
+ * The value must already have been validated as a Date.
+ *
+ * @param {Date} value - The Date object to validate.
+ * @param {string} name - The name of the argument.
+ * @throws {TypeError} If the Date is invalid.
+ */
+export function validateValidDate(value, name) {
+  if (Number.isNaN(value.getTime())) {
+    throw new TypeError(`${name} must be a valid Date`)
+  }
+}

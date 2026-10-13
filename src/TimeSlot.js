@@ -7,6 +7,8 @@
  * @license Unlicense
  */
 
+import { validateDate, validateValidDate } from './utils/validation.js'
+
 /**
  * Represents a time slot with a start and end time.
  *
@@ -31,21 +33,11 @@ export class TimeSlot {
    * @param {Date} endTime - The end time of the time slot.
    */
   constructor(startTime, endTime) {
-    if (!(startTime instanceof Date)) {
-      throw new TypeError('startTime must be a Date')
-    }
+    validateDate(startTime, 'startTime')
+    validateDate(endTime, 'endTime')
 
-    if (!(endTime instanceof Date)) {
-      throw new TypeError('endTime must be a Date')
-    }
-
-    if (Number.isNaN(startTime.getTime())) {
-      throw new TypeError('startTime must be a valid Date')
-    }
-
-    if (Number.isNaN(endTime.getTime())) {
-      throw new TypeError('endTime must be a valid Date')
-    }
+    validateValidDate(startTime, 'startTime')
+    validateValidDate(endTime, 'endTime')
 
     if (startTime >= endTime) {
       throw new Error('startTime must be before endTime')
