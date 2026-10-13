@@ -10,7 +10,7 @@
 import { Booking } from './Booking.js'
 import { Resource } from './Resource.js'
 import { TimeSlot } from './TimeSlot.js'
-import { validateString, validateNonEmptyString } from './utils/validation.js'
+import { validateString, validateNonEmptyString, validateDate, validateValidDate } from './utils/validation.js'
 
 /**
  * Manages bookings in a booking calendar.
@@ -83,13 +83,8 @@ export class BookingCalendar {
    * @throws {TypeError} If the date is an invalid Date.
    */
   getBookingsForDate(date) {
-    if (!(date instanceof Date)) {
-      throw new TypeError('date must be a Date')
-    }
-
-    if (Number.isNaN(date.getTime())) {
-      throw new TypeError('date must be a valid Date')
-    }
+    validateDate(date, 'date')
+    validateValidDate(date, 'date')
 
     const startOfDate = new Date(date.getFullYear(), date.getMonth(), date.getDate())
 
