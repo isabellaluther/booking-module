@@ -10,6 +10,7 @@
 import { Booking } from './Booking.js'
 import { Resource } from './Resource.js'
 import { TimeSlot } from './TimeSlot.js'
+import { validateString, validateNonEmptyString } from './utils/validation.js'
 
 /**
  * Manages bookings in a booking calendar.
@@ -47,9 +48,8 @@ export class BookingCalendar {
    * @throws {Error} If the bookingId is empty.
    */
   getBookingById(bookingId) {
-    if (typeof bookingId !== 'string') {
-      throw new TypeError('bookingId must be a string')
-    }
+    validateString(bookingId, 'bookingId')
+    validateNonEmptyString(bookingId, 'bookingId')
 
     const trimmedBookingId = bookingId.trim()
 
