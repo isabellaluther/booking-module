@@ -74,3 +74,29 @@ export function validateInstance(value, expectedClass, name) {
     throw new TypeError(`${name} must be a ${expectedClass.name}`)
   }
 }
+
+/**
+ * Validates that a value is a positive integer.
+ *
+ * @param {*} value - The value to validate.
+ * @param {string} name - The name of the argument.
+ * @throws {TypeError} If the value is not a valid integer.
+ * @throws {Error} If the value is zero or negative.
+ */
+export function validatePositiveInteger(value, name) {
+  if (typeof value !== 'number') {
+    throw new TypeError(`${name} must be a number`)
+  }
+
+  if (Number.isNaN(value)) {
+    throw new TypeError(`${name} must be a valid number`)
+  }
+
+  if (!Number.isInteger(value)) {
+    throw new TypeError(`${name} must be an integer`)
+  }
+
+  if (value <= 0) {
+    throw new Error(`${name} must be greater than zero`)
+  }
+}

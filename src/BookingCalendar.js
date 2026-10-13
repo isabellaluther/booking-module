@@ -10,7 +10,7 @@
 import { Booking } from './Booking.js'
 import { Resource } from './Resource.js'
 import { TimeSlot } from './TimeSlot.js'
-import { validateString, validateNonEmptyString, validateDate, validateValidDate, validateInstance } from './utils/validation.js'
+import { validateString, validateNonEmptyString, validateDate, validateValidDate, validateInstance, validatePositiveInteger } from './utils/validation.js'
 
 /**
  * Manages bookings in a booking calendar.
@@ -114,21 +114,7 @@ export class BookingCalendar {
     validateInstance(resource, Resource, 'resource')
     validateInstance(searchTimeSlot, TimeSlot, 'searchTimeSlot')
 
-    if (typeof durationInMinutes !== 'number') {
-      throw new TypeError('durationInMinutes must be a number')
-    }
-
-    if (Number.isNaN(durationInMinutes)) {
-      throw new TypeError('durationInMinutes must be a valid number')
-    }
-
-    if (!Number.isInteger(durationInMinutes)) {
-      throw new TypeError('durationInMinutes must be an integer')
-    }
-
-    if (durationInMinutes <= 0) {
-      throw new Error('durationInMinutes must be greater than zero')
-    }
+    validatePositiveInteger(durationInMinutes, 'durationInMinutes')
 
     const availableTimeSlots = []
 
