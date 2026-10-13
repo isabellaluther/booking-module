@@ -10,6 +10,14 @@
 import { Booking } from './Booking.js'
 import { Resource } from './Resource.js'
 import { TimeSlot } from './TimeSlot.js'
+import {
+  validateString,
+  validateNonEmptyString,
+  validateDate,
+  validateValidDate,
+  validateInstance,
+  validatePositiveInteger,
+} from './utils/validation.js'
 
 /**
  * Manages bookings in a booking calendar.
@@ -47,15 +55,10 @@ export class BookingCalendar {
    * @throws {Error} If the bookingId is empty.
    */
   getBookingById(bookingId) {
-    if (typeof bookingId !== 'string') {
-      throw new TypeError('bookingId must be a string')
-    }
+    validateString(bookingId, 'bookingId')
+    validateNonEmptyString(bookingId, 'bookingId')
 
     const trimmedBookingId = bookingId.trim()
-
-    if (trimmedBookingId === '') {
-      throw new Error('bookingId must not be empty')
-    }
 
     return this.#bookings.find((booking) => booking.getId() === trimmedBookingId)
   }
@@ -67,9 +70,7 @@ export class BookingCalendar {
    * @throws {TypeError} If the resource is not an instance of Resource.
    */
   getBookingsForResource(resource) {
-    if (!(resource instanceof Resource)) {
-      throw new TypeError('resource must be a Resource')
-    }
+    validateInstance(resource, Resource, 'resource')
 
     return this.#bookings.filter((booking) => booking.getResource().getId() === resource.getId())
   }
@@ -83,13 +84,8 @@ export class BookingCalendar {
    * @throws {TypeError} If the date is an invalid Date.
    */
   getBookingsForDate(date) {
-    if (!(date instanceof Date)) {
-      throw new TypeError('date must be a Date')
-    }
-
-    if (Number.isNaN(date.getTime())) {
-      throw new TypeError('date must be a valid Date')
-    }
+    validateDate(date, 'date')
+    validateValidDate(date, 'date')
 
     const startOfDate = new Date(date.getFullYear(), date.getMonth(), date.getDate())
 
@@ -116,29 +112,10 @@ export class BookingCalendar {
    * @throws {Error} If the duration is zero or negative.
    */
   getAvailableTimeSlots(resource, searchTimeSlot, durationInMinutes) {
-    if (!(resource instanceof Resource)) {
-      throw new TypeError('resource must be a Resource')
-    }
+    validateInstance(resource, Resource, 'resource')
+    validateInstance(searchTimeSlot, TimeSlot, 'searchTimeSlot')
 
-    if (!(searchTimeSlot instanceof TimeSlot)) {
-      throw new TypeError('searchTimeSlot must be a TimeSlot')
-    }
-
-    if (typeof durationInMinutes !== 'number') {
-      throw new TypeError('durationInMinutes must be a number')
-    }
-
-    if (Number.isNaN(durationInMinutes)) {
-      throw new TypeError('durationInMinutes must be a valid number')
-    }
-
-    if (!Number.isInteger(durationInMinutes)) {
-      throw new TypeError('durationInMinutes must be an integer')
-    }
-
-    if (durationInMinutes <= 0) {
-      throw new Error('durationInMinutes must be greater than zero')
-    }
+    validatePositiveInteger(durationInMinutes, 'durationInMinutes')
 
     const availableTimeSlots = []
 
@@ -194,9 +171,7 @@ export class BookingCalendar {
    * @throws {Error} If the booking conflicts with an existing booking.
    */
   addBooking(booking) {
-    if (!(booking instanceof Booking)) {
-      throw new TypeError('booking must be a Booking')
-    }
+    validateInstance(booking, Booking, 'booking')
 
     const bookingIdAlreadyExists = this.#bookings.some((existingBooking) => existingBooking.getId() === booking.getId())
 
@@ -221,15 +196,10 @@ export class BookingCalendar {
    * @throws {Error} If the bookingId is empty.
    */
   cancelBooking(bookingId) {
-    if (typeof bookingId !== 'string') {
-      throw new TypeError('bookingId must be a string')
-    }
+    validateString(bookingId, 'bookingId')
+    validateNonEmptyString(bookingId, 'bookingId')
 
     const trimmedBookingId = bookingId.trim()
-
-    if (trimmedBookingId === '') {
-      throw new Error('bookingId must not be empty')
-    }
 
     const bookingIndex = this.#bookings.findIndex((booking) => booking.getId() === trimmedBookingId)
 
@@ -248,9 +218,7 @@ export class BookingCalendar {
    * @throws {TypeError} If the booking is not an instance of Booking.
    */
   hasBookingConflict(booking) {
-    if (!(booking instanceof Booking)) {
-      throw new TypeError('booking must be a Booking')
-    }
+    validateInstance(booking, Booking, 'booking')
 
     return this.#bookings.some((existingBooking) => {
       const sameResource = existingBooking.getResource().getId() === booking.getResource().getId()

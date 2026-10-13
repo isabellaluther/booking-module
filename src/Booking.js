@@ -9,6 +9,7 @@
 
 import { Resource } from './Resource.js'
 import { TimeSlot } from './TimeSlot.js'
+import { validateString, validateNonEmptyString } from './utils/validation.js'
 
 /**
  * Represents a booking of a resource during a time slot.
@@ -39,13 +40,8 @@ export class Booking {
    * @throws {TypeError} If the time slot is not a TimeSlot.
    */
   constructor(id, resource, timeSlot) {
-    if (typeof id !== 'string') {
-      throw new TypeError('id must be a string')
-    }
-
-    if (id.trim() === '') {
-      throw new Error('id must not be empty')
-    }
+    validateString(id, 'id')
+    validateNonEmptyString(id, 'id')
 
     if (!(resource instanceof Resource)) {
       throw new TypeError('resource must be a Resource')

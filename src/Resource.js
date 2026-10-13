@@ -7,6 +7,8 @@
  * @license Unlicense
  */
 
+import { validateNonEmptyString, validateString } from './utils/validation.js'
+
 /**
  * Represents a resource that can be booked.
  */
@@ -28,21 +30,11 @@ export class Resource {
    * @param {string} name - The name of the resource.
    */
   constructor(id, name) {
-    if (typeof id !== 'string') {
-      throw new TypeError('id must be a string')
-    }
+    validateString(id, 'id')
+    validateString(name, 'name')
 
-    if (typeof name !== 'string') {
-      throw new TypeError('name must be a string')
-    }
-
-    if (id.trim() === '') {
-      throw new Error('id must not be empty')
-    }
-
-    if (name.trim() === '') {
-      throw new Error('name must not be empty')
-    }
+    validateNonEmptyString(id, 'id')
+    validateNonEmptyString(name, 'name')
 
     this.#id = id.trim()
     this.#name = name.trim()
