@@ -168,9 +168,7 @@ export class BookingCalendar {
    * @throws {Error} If the booking conflicts with an existing booking.
    */
   addBooking(booking) {
-    if (!(booking instanceof Booking)) {
-      throw new TypeError('booking must be a Booking')
-    }
+    validateInstance(booking, Booking, 'booking')
 
     const bookingIdAlreadyExists = this.#bookings.some((existingBooking) => existingBooking.getId() === booking.getId())
 
