@@ -10,7 +10,14 @@
 import { Booking } from './Booking.js'
 import { Resource } from './Resource.js'
 import { TimeSlot } from './TimeSlot.js'
-import { validateString, validateNonEmptyString, validateDate, validateValidDate, validateInstance, validatePositiveInteger } from './utils/validation.js'
+import {
+  validateString,
+  validateNonEmptyString,
+  validateDate,
+  validateValidDate,
+  validateInstance,
+  validatePositiveInteger,
+} from './utils/validation.js'
 
 /**
  * Manages bookings in a booking calendar.
